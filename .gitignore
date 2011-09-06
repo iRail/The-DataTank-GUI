@@ -1,0 +1,17 @@
+Config.class.php
+documentation/Documentation.aux
+documentation/Documentation.dvi
+documentation/Documentation.log
+documentation/Documentation.ps
+documentation/Documentation.pdf
+documentation/Documentation.toc
+documentation/UMLModelTDT.pdf.aux
+Documentation.pdf
+bin/testAPI_DB.php
+bin/testAPI_CSV.php
+Makefile
+.DS_Store
+*/.DS_Store
+*/*/.DS_Store
+*/*/*/.DS_Store
+*/*/*/*/.DS_Store

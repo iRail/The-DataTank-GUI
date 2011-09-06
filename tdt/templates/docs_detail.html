@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ module }}/{{ resource }}</h1>
+
+<h2>All possible parameters:</h2>
+<ul>
+{% for var, doc in parameters %}
+    <li><strong>{{ var }}:</strong> {{ doc }}</li>
+{% endfor %}
+</ul>
+
+<h3>You can use RESTful identifiers on any resource</h3>
+
+{% endblock %}
