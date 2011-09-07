@@ -83,6 +83,12 @@ a.delete_input:hover {
     margin: -10px -11px 0 -10px;
 }
 
+#stats-placeholder {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 25px;
+}
+
 #footer {
     padding-top: 25px;
     text-align: center;

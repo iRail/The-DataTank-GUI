@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block js_include %}
+<!--[if lte IE 8]><script type="text/javascript" src="{{ static }}/flot/excanvas.min.js"></script><![endif]-->
+<script type="text/javascript" src="{{ static }}/flot/jquery.flot.js"></script>
+<script type="text/javascript" src="{{ static }}/plot.js"></script>
+{% endblock %}
+
+{% block content %}
+<h1>Statistics</h1>
+<div id="stats-placeholder"></div>
+<form class="form-stacked">
+    <fieldset>
+        <legend>Statistics parameters</legend>
+        <label>Module: </label>
+        <select id="stats-module">
+            <option>Select a module</option>
+        </select>
+        <label>Request: </label>
+        <select id="stats-resource" class="disabled" disabled="disabled">
+            <option>Select a resource</option>
+        </select>
+        <div class="actions">
+            <button id="stats-submit" class="btn primary">Submit</button>
+            <button class="btn">Clear</button>
+        </div>
+    </fieldset>
+</form>
+{% endblock %}

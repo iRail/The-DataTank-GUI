@@ -14,10 +14,10 @@ $app = new Slim(array(
     'log.enable' => true,
     'log.path' => '/tmp/',
     'log.level' => 4,
-    'templates.path' => '/Library/WebServer/Documents/tdt/templates/',
+    'templates.path' => '/Users/abe/Sites/The-DataTank-GUI/tdt/templates/',
     'view' => 'TwigView',
-    'subpath' => '/tdt/app.php',
-    'static' => '/tdt/static',
+    'subpath' => '/~abe/The-DataTank-GUI/tdt/app.php',
+    'static' => '/~abe/The-DataTank-GUI/tdt/static',
     'database.dsn' => 'sqlite:/tmp/tdt.db',
     'database.user' => '',
     'database.password' => '',
@@ -79,7 +79,13 @@ $app->get('/docs/:module/:resource', function($module, $resource) use ($app) {
     $app->render('doc.html',
         array('static' => $app->config('static'), 'subpath' => $app->config('subpath'),
               'module' => $module, 'resource' => $resource, 'url' => $url,
-               'parameters' => $parameters, 'doc' => $r->doc));
+              'parameters' => $parameters, 'doc' => $r->doc));
+});
+
+$app->get('/stats', function() use ($app) {
+    
+    $app->render('stats.html',
+        array('static' => $app->config('static'), 'subpath' => $app->config('subpath')));
 });
 
 $app->get('/admin', function() use ($app) {

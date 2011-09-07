@@ -9,17 +9,19 @@
         <script type="text/javascript" src="{{ static }}/backbone.js"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
         <script type="text/javascript" src="{{ static }}/jquery.tablesorter.min.js"></script>
-        <script type="text/javascript" src="{{ static }}/admin.js"></script>
+        <!--<script type="text/javascript" src="{{ static }}/admin.js"></script>-->
+        {% block js_include %}{% endblock %}
     </head>
     <body>
         <!-- Materhead -->
         <div id="masterhead" class="container">
             <div class="row">
-                <div class="span10 columns"><a href="{{ subpath }}"><img src="{{ static }}/logo.png"/></a></div>
-                <div class="span6 columns">
+                <div class="span9 columns"><a href="{{ subpath }}"><img src="{{ static }}/logo.png"/></a></div>
+                <div class="span7 columns">
                     <div id="menu">
                         <a href="{{ subpath }}">Home</a>
-                      <a href="{{ subpath }}/docs">Documentation</a>
+                        <a href="{{ subpath }}/docs">Documentation</a>
+                        <a href="{{ subpath }}/stats">Statistics</a>
                       <a href="{{ subpath }}/admin">Admin</a>
                     </ul>               
                 </div>
