@@ -8,6 +8,9 @@
 
 {% block content %}
 <h1>Statistics</h1>
+<div id="stats-error" class="alert-message error hidden">
+    <p><strong>error:</strong> No data was found for this module, this probably means that no requests or erros where actioned on this module.</p>
+</div>
 <div id="stats-placeholder"></div>
 <form class="form-stacked">
     <fieldset>
@@ -20,10 +23,6 @@
         <select id="stats-resource" disabled="disabled">
             <option selected="selected">-- Select a resource --</option>
         </select>
-        <div class="actions">
-            <button id="stats-submit" class="btn primary" disabled="disabled">Submit</button>
-            <button class="btn">Clear</button>
-        </div>
     </fieldset>
 </form>
 {% endblock %}

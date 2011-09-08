@@ -12,6 +12,17 @@ $(document).ready( function() {
     
     $.plot(placeholder, data, options);
 
+    // Hide and show error functions
+    var statsError = $('#stats-error');
+    var hideError = function() {
+        statsError.addClass('hidden');
+    };
+
+    var showError = function() {
+        statsError.removeClass('hidden');
+        $.plot(placeholder, data, options);
+    };
+
     // Fill the stats-module select with all available modules.
     var statsModule = $('#stats-module');
     var fillModules = function(modules) {
@@ -30,8 +41,9 @@ $(document).ready( function() {
 
     // Fill the stats-resource with all its resources.
     var statsResource = $('#stats-resource');
-    var statsSubmit = $('#stats-submit');
     var fillResources = function(module) {
+        //$('#stats-error').addClass('hidden');
+        console.log('fill');
         statsResource.empty();
         statsResource.append('<option>-- Select a resource --</option>');
 
@@ -39,18 +51,22 @@ $(document).ready( function() {
             statsResource.append('<option>'+key+'</option>');
         });
         statsResource.removeAttr('disabled');
-        statsSubmit.removeAttr('disabled'); 
     };
     
     statsModule.change(function(e) {
-        var module = $('#stats-module option:selected').text();
-        //if ($(module === '-- Select a module --')) {
-            //statsResource.empty();
-            //statsResource.append('<option>-- Select a resource --</option>');
-            //statsResource.attr('disabled', 'disabled');
-            //statsSubmit.attr('disabled', 'disabled');
-        //} else {
+        hideError();
+        var module = statsModule.val();
+        console.log('module: ' + module);
+        if (module === '-- Select a module --') {
+            console.log('world');
+            statsResource.empty();
+            statsResource.append('<option>-- Select a resource --</option>');
+            statsResource.attr('disabled', 'disabled');
+            // Reset plot placeholder
+            $.plot(placeholder, data, options);
+        } else {
             console.log('hello')
+            // get all resource for module and put them in statsResource
             $.ajax({
                 type: 'GET',
                 //TODO replace by real url.
@@ -58,36 +74,69 @@ $(document).ready( function() {
                     '/?format=json',
                 dataType: 'json',
                 success: fillResources,
-                error: function() {alert('error');}
+                error: showError
             });
-        //}
-    });
-    
-    // If #stats-submit is pressed generate graph.
-    statsSubmit.click(function() {
-        var moduleName = statsModule.val();
-        var resourceName = statsResource.val();
-        
-        //var args =  moduleName + "/";
-        var resource ="";
-        if (resourceName != "-- Select a resource --") {
-            resource= "&resource="+resourceName;
+            // draw graph for module with all its resources
+            $.ajax({
+                type: 'GET',
+                url: 'http://datatank.demo.ibbt.be/TDTInfo/Queries/' +
+                    module + '/?format=json',
+                dataType: 'json',
+                success: function(result) {
+                    plotChart(result);
+                },
+                error: showError
+            });
         }
-        
+    });
+
+    // 
+    statsResource.change(function(e) {
+        hideError();
+        var module = statsModule.val();
+        var resource = statsResource.val()
+        var resourceParameter = '';
+        if (resource !== '-- Select a resource --') {
+            resourceParameter = '&resource=' + resource;
+        }
+        // draw graph for module with all its resources
         $.ajax({
             type: 'GET',
             url: 'http://datatank.demo.ibbt.be/TDTInfo/Queries/' +
-                moduleName + '/?format=json' + resource,
+                module + '/?format=json' + resourceParameter,
             dataType: 'json',
             success: function(result) {
                 plotChart(result);
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert('Something went wrong. ' + errorThrown);
-            }
+            error: showError
         });
-        return false;
     });
+    
+    // If #stats-submit is pressed generate graph.
+    //statsSubmit.click(function() {
+        //var moduleName = statsModule.val();
+        //var resourceName = statsResource.val();
+        
+        ////var args =  moduleName + "/";
+        //var resource ="";
+        //if (resourceName != "-- Select a resource --") {
+            //resource= "&resource="+resourceName;
+        //}
+        
+        //$.ajax({
+            //type: 'GET',
+            //url: 'http://datatank.demo.ibbt.be/TDTInfo/Queries/' +
+                //moduleName + '/?format=json' + resource,
+            //dataType: 'json',
+            //success: function(result) {
+                //plotChart(result);
+            //},
+            //error: function(XMLHttpRequest, textStatus, errorThrown) {
+                //alert('Something went wrong. ' + errorThrown);
+            //}
+        //});
+        //return false;
+    //});
 });
 
 /* plotChart with own Data !! */
