@@ -14,35 +14,59 @@ $(document).ready( function() {
 
     // Fill the stats-module select with all available modules.
     var statsModule = $('#stats-module');
-    var modules;
+    var fillModules = function(modules) {
+        $.each(modules, function(key, value) {
+            statsModule.append('<option>'+key+'</option>');
+        });
+    };
     $.ajax({
         type: 'GET',
         //TODO replace by real url.
         url: 'http://datatank.demo.ibbt.be/TDTInfo/Modules/?format=json',
         dataType: 'json',
-        success: function(result) {alert('result:'+result);modules=result;},
+        success: fillModules,
         error: function() {alert('error');}
     });
-    for (i in modules) {
-        statsModule.append('<option>'+i+'</option>');
-    }
-        
 
+    // Fill the stats-resource with all its resources.
+    var statsResource = $('#stats-resource');
+    var fillResources = function(module) {
+        statsResource.empty();
+        statsResource.append('<option>-- Select a resource --</option>');
+        $.each(module, function(key, value) {
+            statsResource.append('<option>'+key+'</option>');
+        });
+        statsResource.removeAttr('disabled');
+    };
     
-    $('#stats-submit').click( function() {
-        var moduleName = $('#stats-module').val();
-        var resourceName = $('#stats-resource').val();
+    $('#stats-module').change(function(e) {
+        var module = $('#stats-module option:selected').text();
+        $.ajax({
+            type: 'GET',
+            //TODO replace by real url.
+            url: 'http://datatank.demo.ibbt.be/TDTInfo/Modules/' + module +
+                '/?format=json',
+            dataType: 'json',
+            success: fillResources,
+            error: function() {alert('error');}
+        });
+    });
+    
+    // If #stats-submit is pressed generate graph.
+    $('#stats-submit').click(function() {
+        var moduleName = statsModule.val();
+        var resourceName = statsResource.val();
         
-        var args =  moduleName + "/";
+        //var args =  moduleName + "/";
         var resource ="";
-        
-        if (resourceName != "") {
+        if (resourceName != "-- Select a resource --") {
             resource= "&resource="+resourceName;
         }
         
         $.ajax({
             type: 'GET',
-            url: 'TDTInfo/Queries/?format=json', // TODO get url
+            url: 'http://datatank.demo.ibbt.be/TDTInfo/Queries/' +
+                moduleName + '/?format=json' + resource,
             dataType: 'json',
             success: function(result) {
                 plotChart(result);
@@ -123,7 +147,7 @@ function plotChart(dataArray) {
 		    }
 		};
         
-        var plotarea = $("#placeholder");
+        var plotarea = $("#stats-placeholder");
 		$.plot( plotarea , data, options );
 
 		function showTooltip(x, y, contents) {
@@ -140,7 +164,7 @@ function plotChart(dataArray) {
 		}
 
 		var previousPoint = null;
-		$("#placeholder").bind("plothover", function(event, pos, item) {
+		$("#stats-placeholder").bind("plothover", function(event, pos, item) {
 		    if (item) {
 				if (previousPoint != item.dataIndex) {
 				    previousPoint = item.dataIndex;
@@ -166,16 +190,16 @@ function plotChart(dataArray) {
 			}
 		});
 	} else {
-		$("#placeholder").text("No logging data available for the selected criteria.");
+		$("#stats-placeholder").text("No logging data available for the selected criteria.");
 	}
 };
 
 /* catching select Module event */
-$("#stats-module").change(function(e) {
-    var moduleName = $("#module").val();
-	$("#method").empty();
-	var arr = modmeths[moduleName];
-	for (var i=0; i<arr.length; ++i) {
-	    $("#method").append("<option value="+arr[i]+">"+arr[i]+"</option>");
-	}
-});
+//$("#stats-module").change(function(e) {
+    //var moduleName = $("#module").val();
+	//$("#method").empty();
+	//var arr = modmeths[moduleName];
+	//for (var i=0; i<arr.length; ++i) {
+		//$("#method").append("<option value="+arr[i]+">"+arr[i]+"</option>");
+	//}
+//});

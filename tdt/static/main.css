@@ -93,3 +93,12 @@ a.delete_input:hover {
     padding-top: 25px;
     text-align: center;
 }
+
+/* table flot reset */
+#stats-placeholder table {
+    width: 80px;
+}
+
+#stats-placeholder td {
+    border: 0px solid black;
+}
