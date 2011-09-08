@@ -12,7 +12,7 @@ $(document).ready( function() {
     
     $.plot(placeholder, data, options);
 
-    // Hide and show error functions
+    // Functions to hide and show error message.
     var statsError = $('#stats-error');
     var hideError = function() {
         statsError.addClass('hidden');
@@ -42,8 +42,6 @@ $(document).ready( function() {
     // Fill the stats-resource with all its resources.
     var statsResource = $('#stats-resource');
     var fillResources = function(module) {
-        //$('#stats-error').addClass('hidden');
-        console.log('fill');
         statsResource.empty();
         statsResource.append('<option>-- Select a resource --</option>');
 
@@ -56,16 +54,13 @@ $(document).ready( function() {
     statsModule.change(function(e) {
         hideError();
         var module = statsModule.val();
-        console.log('module: ' + module);
         if (module === '-- Select a module --') {
-            console.log('world');
             statsResource.empty();
             statsResource.append('<option>-- Select a resource --</option>');
             statsResource.attr('disabled', 'disabled');
             // Reset plot placeholder
             $.plot(placeholder, data, options);
         } else {
-            console.log('hello')
             // get all resource for module and put them in statsResource
             $.ajax({
                 type: 'GET',
@@ -253,13 +248,3 @@ function plotChart(dataArray) {
 		$("#stats-placeholder").text("No logging data available for the selected criteria.");
 	}
 };
-
-/* catching select Module event */
-//$("#stats-module").change(function(e) {
-    //var moduleName = $("#module").val();
-	//$("#method").empty();
-	//var arr = modmeths[moduleName];
-	//for (var i=0; i<arr.length; ++i) {
-		//$("#method").append("<option value="+arr[i]+">"+arr[i]+"</option>");
-	//}
-//});
