@@ -36,7 +36,7 @@ class Stats {
 	}
 	echo "</select>";
 	echo '<script language="javascript"> '. " modmeths = new Array();\n";
-	foreach ($modules as $name => $mod){
+	foreach ($modules as $name => $mod) {
 	    echo "modmeths['".$name."'] = new Array();";
 	    $resources = get_object_vars($mod);
 	    foreach($resources as $nameresource => $resource){    

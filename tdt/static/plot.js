@@ -30,30 +30,41 @@ $(document).ready( function() {
 
     // Fill the stats-resource with all its resources.
     var statsResource = $('#stats-resource');
+    var statsSubmit = $('#stats-submit');
     var fillResources = function(module) {
         statsResource.empty();
         statsResource.append('<option>-- Select a resource --</option>');
+
         $.each(module, function(key, value) {
             statsResource.append('<option>'+key+'</option>');
         });
         statsResource.removeAttr('disabled');
+        statsSubmit.removeAttr('disabled'); 
     };
     
-    $('#stats-module').change(function(e) {
+    statsModule.change(function(e) {
         var module = $('#stats-module option:selected').text();
-        $.ajax({
-            type: 'GET',
-            //TODO replace by real url.
-            url: 'http://datatank.demo.ibbt.be/TDTInfo/Modules/' + module +
-                '/?format=json',
-            dataType: 'json',
-            success: fillResources,
-            error: function() {alert('error');}
-        });
+        //if ($(module === '-- Select a module --')) {
+            //statsResource.empty();
+            //statsResource.append('<option>-- Select a resource --</option>');
+            //statsResource.attr('disabled', 'disabled');
+            //statsSubmit.attr('disabled', 'disabled');
+        //} else {
+            console.log('hello')
+            $.ajax({
+                type: 'GET',
+                //TODO replace by real url.
+                url: 'http://datatank.demo.ibbt.be/TDTInfo/Modules/' + module +
+                    '/?format=json',
+                dataType: 'json',
+                success: fillResources,
+                error: function() {alert('error');}
+            });
+        //}
     });
     
     // If #stats-submit is pressed generate graph.
-    $('#stats-submit').click(function() {
+    statsSubmit.click(function() {
         var moduleName = statsModule.val();
         var resourceName = statsResource.val();
         
@@ -120,7 +131,7 @@ function plotChart(dataArray) {
 		    legend: {
                 show: true,
 			    margin: 10,
-			    backgroundOpacity: 0.5
+			    backgroundOpacity: 0
 		    },
 		    points: {
 			    show: true,
