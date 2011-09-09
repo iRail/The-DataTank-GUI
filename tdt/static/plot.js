@@ -33,7 +33,7 @@ $(document).ready( function() {
     $.ajax({
         type: 'GET',
         //TODO replace by real url.
-        url: 'http://datatank.demo.ibbt.be/TDTInfo/Modules/?format=json',
+        url: 'http://datatank.demo.ibbt.be/TDTInfo/Resources/?format=json',
         dataType: 'json',
         success: fillModules,
         error: function() {alert('error');}
@@ -65,7 +65,7 @@ $(document).ready( function() {
             $.ajax({
                 type: 'GET',
                 //TODO replace by real url.
-                url: 'http://datatank.demo.ibbt.be/TDTInfo/Modules/' + module +
+                url: 'http://datatank.demo.ibbt.be/TDTInfo/Resources/' + module +
                     '/?format=json',
                 dataType: 'json',
                 success: fillResources,

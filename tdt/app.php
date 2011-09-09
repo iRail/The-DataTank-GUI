@@ -36,7 +36,7 @@ $app->get('/', function() use ($app) {
 });
 
 $app->get('/docs', function() use ($app) {
-    $url = Config::$HOSTNAME . Config::$SUBDIR."TDTInfo/Modules/?format=json";
+    $url = Config::$HOSTNAME . Config::$SUBDIR."TDTInfo/Resources/?format=json";
     TDT::HttpRequest($url);
     $docs = json_decode(TDT::HttpRequest($url)->data);
     if (is_object($docs)) {
@@ -58,7 +58,7 @@ $app->get('/docs', function() use ($app) {
 
 $app->get('/docs/:module/:resource', function($module, $resource) use ($app) {
     $url = Config::$HOSTNAME . Config::$SUBDIR .
-        "TDTInfo/Modules/$module/$resource/?format=json";
+        "TDTInfo/Resources/$module/$resource/?format=json";
     $r = json_decode(TDT::HttpRequest($url)->data);
 
     //get a sequence of the parameters
@@ -83,7 +83,6 @@ $app->get('/docs/:module/:resource', function($module, $resource) use ($app) {
 });
 
 $app->get('/stats', function() use ($app) {
-    
     $app->render('stats.html',
         array('static' => $app->config('static'), 'subpath' => $app->config('subpath')));
 });
