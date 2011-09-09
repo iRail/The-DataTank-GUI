@@ -29,7 +29,7 @@ class TDT{
         $uri = @parse_url($url);
 
         if ($uri == FALSE) {
-            throw new CouldNotParseUrlTDTException($url);
+            throw new Exception($url);
         }
         //maybe our result is the cache. If so, return the cache value
         $cache = Cache::getInstance();
@@ -42,7 +42,7 @@ class TDT{
         $result = new StdClass();
 
         if (!isset($uri['scheme'])) {
-            throw new CouldNotParseUrlTDTException("Forgot to add http(s)? " . $url);    
+            throw new Exception("Forgot to add http(s)? " . $url);    
         }
 
         self::timer_start(__FUNCTION__);
@@ -91,7 +91,7 @@ class TDT{
 
         // Make sure the socket opened properly.
         if (!$fp) {
-            throw new HttpOutException($url);
+            throw new Exception($url);
         }
 
         // Construct the path to act on.
