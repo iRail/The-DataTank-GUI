@@ -5,19 +5,19 @@ require 'TwigView.php';
 require 'rb.php';
 require 'models.php';
 require 'serializer.php';
-require '../Config.class.php';
-require '../TDT.class.php';
-require '../caching/Cache.class.php';
+require 'Config.class.php';
+require 'TDT.class.php';
+require 'caching/Cache.class.php';
 
 $app = new Slim(array(
     'debug' => true,
     'log.enable' => true,
     'log.path' => '/tmp/',
     'log.level' => 4,
-    'templates.path' => '/Users/abe/Sites/The-DataTank-GUI/tdt/templates/',
+    'templates.path' => '/Users/abe/Sites/The-DataTank-GUI/templates/',
     'view' => 'TwigView',
-    'subpath' => '/~abe/The-DataTank-GUI/tdt/app.php',
-    'static' => '/~abe/The-DataTank-GUI/tdt/static',
+    'subpath' => '/~abe/The-DataTank-GUI/app.php',
+    'static' => '/~abe/The-DataTank-GUI/static',
     'database.dsn' => 'sqlite:/tmp/tdt.db',
     'database.user' => '',
     'database.password' => '',
