@@ -149,20 +149,20 @@ function plotChart(dataArray) {
 	timeArray["requests"] = [];
 	timeArray["errors"] = [];
 	
-	for (var i in dataset) {
-		dataToDisplayRequests.push([hackindex,dataset[i]]);
-		timeArray["requests"].push(i*1000);
-		hackindex++;
-	}
-	/* create our error dataset */
-	dataset = dataArray["errors"];
-	var dataToDisplayErrors = [];
-	var hackindex = 0;
-	for (var i in dataset) {
-		dataToDisplayErrors.push([hackindex,dataset[i]]);
-		timeArray["errors"].push(i*1000);
-		hackindex++;
-	}	
+    for (var i in dataset) {
+        dataToDisplayRequests.push([hackindex,dataset[i].amount]);
+        timeArray["requests"].push(dataset[i].time*1000);
+        hackindex++;
+    }
+    /* create our error dataset */
+    dataset = dataArray["errors"];
+    var dataToDisplayErrors = [];
+    var hackindex = 0;
+    for(var i in dataset){
+        dataToDisplayErrors.push([hackindex,dataset[i].amount]);
+        timeArray["errors"].push(dataset[i].time*1000);
+        hackindex++;
+    }
 
 	if (dataToDisplayRequests.length > 0 || dataToDisplayErrors.length > 0) {
 	    /* construct the x-axis array, again conversion from unix to javascripttime */
