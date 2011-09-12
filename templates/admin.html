@@ -6,7 +6,7 @@
                     <div class="container">
                       <ul>
                           <li class="active"><a href="#admin-admin-page">Admin</a></li>
-                          <li><a href="#admin-module-page">Modules</a></li>
+                          <li><a href="#admin-package">Packages</a></li>
                           <li><a href="#admin-resource-page">Resources</a></li>
                           <li><a href="#admin-profile-page">Profile</a></li>
                       </ul>
@@ -29,7 +29,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><a href="#">Modules</a></td>
+                                    <td><a href="#">Package</a></td>
                                 </tr>
                                 <tr>
                                     <td><a href="#">Resources</a></td>
@@ -97,9 +97,9 @@
                 </div>
             </div>
 
-            <div id="admin-module-page">
-                <h1>Modules</h1>
-                <table id="admin-modules" class="zebra-striped">
+            <div id="admin-package">
+                <h1>Packages</h1>
+                <table id="admin-packages" class="zebra-striped">
                     <thead>
                         <tr>
                             <th>&nbsp;</th>
@@ -150,16 +150,16 @@
 
                 <form class="form-stacked">
                     <fieldset>
-                        <legend>Add module</legend>
+                        <legend>Add Package</legend>
                         <div class="clearfix">
-                            <label>Module name</label>
+                            <label>Package name</label>
                             <div class="input">
-                                <input type="text" class="xlarge">
+                                <input id="admin-package-name" type="text" class="xlarge">
                             </div>
                         </div>
                         <div class="actions">
-                            <button type="submit" class="btn primary">Save</button>&nbsp;
-                            <button type="reset" class="btn">Cancel</button>
+                            <a id="admin-package-save" type="submit" class="btn primary">Save</a>&nbsp;
+                            <a type="reset" class="btn">Cancel</a>
                         </div>
                     </fieldset>
                 </form>
@@ -174,7 +174,7 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Type</th>
-                            <th>Module</th>
+                            <th>Package</th>
                             <th>Publication Date</th>
                         </tr>
                     </thead>
@@ -289,7 +289,7 @@
                             </div>                        
                         </div>
                         <div class="clearfix">
-                            <label>Module</label>
+                            <label>Package</label>
                             <div class="input">
                                 <select class="xlarge"></select>
                             </div>

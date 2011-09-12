@@ -1,45 +1,51 @@
-(function ($) {
-    window.restfulApp = Backbone.Router.extend({
-        //Routes tell the app what to do
-        routes: {
-            "": "index", 
+window.App = (function ($) {
+    window.jQueryView = Backbone.View.extend({
+        initialize: function() {
+            this.el = $(this.el);
         },
-        index: function() {console.log('index');}
     });
 
-    var app = restfulApp();
-    //Initiate a new history and controller class
-    //Backbone.emulateHTTP = true;
-    //Backbone.emulateJSON = true
-    Backbone.history.start();
-})(jQuery);
+    window.Package = Backbone.Model.extend({
 
-//(function($, _, Backbone) {
-    //var Router = Backbone.Router.extend({
-        //routes: {
-            //'': 'index',
-        //},
-        //index: function() {
-            //console.log('route index');
-        //},
-    //});
+    });
 
-    //var router = new Router();
+    window.PackageCollection = Backbone.Collection.extend({
 
-    //Backbone.history.start();
+    });
 
-    ////Backbone.history.start();
+    window.PackageView = jQueryView.extend({
+        initialize: function() {
+            jQueryView.prototype.initialize.call(this);
+        },
+    });
 
-    ////$(document).ready(function() {
-        ////console.log('hello');
-        ////var resourcePage = $('a[href="#admin-resources"');
-        ////resourcePage.click(function() {
-            ////alert('hello');
-            ////$('#admin-resource').removeClass('hidden');
-        ////});
+    window.AdminPackageView = jQueryView.extend({
+        el: '#admin-package',
 
-        ////var app = App(jQuery, _, Backbone);
-    ////});
-//})(jQuery, _, Backbone);
+        initialize: function() {
+            // super
+            jQueryView.prototype.initialize.call(this);
+        },
 
+        events: {
+            'click #admin-package-save': 'createPackage',
+        },
 
+        createPackage: function() {
+            var name = $('#admin-package-name').val();
+            console.log('Create: ' + name);
+        },
+    });
+
+    var self = {};
+    self.start = function() {
+        console.log('1');
+        new AdminPackageView();
+        console.log('2');
+    };
+    return self;
+});
+
+$(function() {
+    new App(jQuery).start();
+});
