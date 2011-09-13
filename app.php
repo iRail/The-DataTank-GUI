@@ -39,9 +39,9 @@ $app->get('/docs', function() use ($app) {
     $url = Config::$HOSTNAME . Config::$SUBDIR."TDTInfo/Resources/?format=json";
     TDT::HttpRequest($url);
     $docs = json_decode(TDT::HttpRequest($url)->data);
+    $modules = array();
     if (is_object($docs)) {
         $ms = get_object_vars($docs);
-        $modules = array();
         foreach($ms as $name => $rs) {
             $resources = array();
             $rsv = get_object_vars($rs);

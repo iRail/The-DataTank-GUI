@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 
+<script id="admin-package-template" type="text/x-jquery-tmpl">
+    {{ '{{' }}each packages{{ '}}' }}
+    <tr>
+        <td><a href="#"><img src="{{ static }}/trash.gif"/></a></td>
+        <td>${$value.get('name')}</td>
+        <td>${$value.get('create_date').getDate()}, ${$value.get('create_date').getMonthName()} ${$value.get('create_date').getFullYear()}</td>
+    </tr>
+    {{ '{{' }}/each{{ '}}' }}
+</script>
 <div class="topbar-wrapper"><div class="topbar">
                   <div class="fill">
                     <div class="container">
@@ -99,52 +108,16 @@
 
             <div id="admin-package">
                 <h1>Packages</h1>
-                <table id="admin-packages" class="zebra-striped">
+                <table class="zebra-striped">
                     <thead>
                         <tr>
                             <th>&nbsp;</th>
-                            <th class="yellow">#</th>
                             <th>Name</th>
-                            <th>Publication Date</th>
+                            <th>Creation Date</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>1</td>
-                            <td>Gentse Feesten</td>
-                            <td>24, July 1988</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>2</td>
-                            <td>Pukkel Pop</td>
-                            <td>3, August 1990</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>3</td>
-                            <td>Gras Rock</td>
-                            <td>12, September 2004</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>4</td>
-                            <td>Pukkel Pop</td>
-                            <td>3, August 1990</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>5</td>
-                            <td>Gras Rock</td>
-                            <td>12, October 2004</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>6</td>
-                            <td>Gentse Feesten</td>
-                            <td>24, July 1988</td>
-                        </tr>
+                    <tbody id="admin-packages">
+
                     </tbody>
                 </table>
 
