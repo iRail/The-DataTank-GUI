@@ -13,11 +13,11 @@
 <div class="topbar-wrapper"><div class="topbar">
                   <div class="fill">
                     <div class="container">
-                      <ul>
-                          <li class="active"><a href="#admin-admin-page">Admin</a></li>
-                          <li><a href="#admin-package">Packages</a></li>
-                          <li><a href="#admin-resource-page">Resources</a></li>
-                          <li><a href="#admin-profile-page">Profile</a></li>
+                      <ul id="admin-menu">
+                          <li id="admin-menu-index" class="active"><a href="#">Admin</a></li>
+                          <li id="admin-menu-packages" ><a href="#packages">Packages</a></li>
+                          <li id="admin-menu-resources" ><a href="#resources">Resources</a></li>
+                          <li id="admin-menu-profile" ><a href="#profile">Profile</a></li>
                       </ul>
                       <ul class="nav secondary-nav">
                         <li><a href="#admin-logout-page">Logout</a></li>
@@ -26,7 +26,7 @@
                   </div><!-- /fill -->
             </div></div>
             
-            <div id="admin-admin-page">
+            <div id="admin-admin">
                 <h1>Admin</h1>
                 <div class="row">
                     <div class="span7 columns">
@@ -106,7 +106,7 @@
                 </div>
             </div>
 
-            <div id="admin-package">
+            <div id="admin-package" class="hidden">
                 <h1>Packages</h1>
                 <table class="zebra-striped">
                     <thead>
@@ -138,7 +138,7 @@
                 </form>
             </div>
 
-            <div id="admin-resource-page">
+            <div id="admin-resource" class="hidden">
                 <h1>Resources</h1>
                 <table id="admin-resources" class="zebra-striped">
                     <thead>
@@ -284,4 +284,12 @@
                             <button type="reset" class="btn">Cancel</button>
                         </div>
                     </form>
+                </div>
+            </div>
+            <div id="admin-profile">
+            </div>
+            <div id="admin-login">
+            </div>
+            <div id="admin-profile">
+            </div>
 {% endblock %}

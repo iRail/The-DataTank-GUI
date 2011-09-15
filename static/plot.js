@@ -33,7 +33,7 @@ $(document).ready( function() {
     $.ajax({
         type: 'GET',
         //TODO replace by real url.
-        url: 'http://datatank.demo.ibbt.be/TDTInfo/Resources/?format=json',
+        url: 'http://datatank.demo.ibbt.be/TDTInfo/Resources.json',
         dataType: 'json',
         success: fillModules,
         error: function() {alert('error');}
@@ -66,7 +66,7 @@ $(document).ready( function() {
                 type: 'GET',
                 //TODO replace by real url.
                 url: 'http://datatank.demo.ibbt.be/TDTInfo/Resources/' + module +
-                    '/?format=json',
+                    '.json',
                 dataType: 'json',
                 success: fillResources,
                 error: showError
@@ -75,7 +75,7 @@ $(document).ready( function() {
             $.ajax({
                 type: 'GET',
                 url: 'http://datatank.demo.ibbt.be/TDTInfo/Queries/' +
-                    module + '/?format=json',
+                    module + '.json',
                 dataType: 'json',
                 success: function(result) {
                     plotChart(result);
@@ -98,7 +98,7 @@ $(document).ready( function() {
         $.ajax({
             type: 'GET',
             url: 'http://datatank.demo.ibbt.be/TDTInfo/Queries/' +
-                module + '/?format=json' + resourceParameter,
+                module + '.json?' + resourceParameter,
             dataType: 'json',
             success: function(result) {
                 plotChart(result);
