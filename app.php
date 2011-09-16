@@ -58,7 +58,7 @@ $app->get('/docs', function() use ($app) {
 
 $app->get('/docs/:module/:resource', function($module, $resource) use ($app) {
     $url = Config::$HOSTNAME . Config::$SUBDIR .
-        "TDTInfo/Resources/$module/$resource/?format=json";
+        "TDTInfo/Resources/$module/$resource.json";
     $r = json_decode(TDT::HttpRequest($url)->data);
 
     //get a sequence of the parameters
