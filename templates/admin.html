@@ -175,52 +175,72 @@
                         <div class="clearfix">
                             <label>Resource name</label>
                             <div class="input">
-                                <input type="text" class="xlarge">
+                                <input id="admin-resource-name" type="text" class="xlarge">
                             </div>
                         </div>
-                        <div id="admin-upload" class="clearfix">
-                            <label>Your file</label>
+                        <!--<div id="admin-upload" class="clearfix">-->
+                            <!--<label>Your file</label>-->
+                            <!--<div class="input">-->
+                                <!--<button class="btn large" id="admin-upload-computer"><img src="{{ static }}/computer16.png"/> Computer</button>-->
+                                <!--<button class="btn large" id="admin-upload-link"><img src="{{ static }}/link16.png"/> Link</button>-->
+                                <!--<span class="help-block">-->
+                                    <!--<strong>Note:</strong> or drap and drop a file onto this page.-->
+                                <!--</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div id="admin-file" class="clearfix hidden">-->
+                            <!--<label>Your file</label>-->
+                            <!--<div class="input-prepend">-->
+                                <!--<span class="add-on"><a id="admin-remove-upload" class="delete_input" href="#"><img src="{{ static }}/trash.gif"/></a></span>-->
+                                <!--<input class="xlarge disabled" id="disabledInput" name="disabledInput" size="30" type="text" placeholder="Gentse Feesten Dag1.csv" disabled="">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="clearfix">
+                            <label>File path</label>
                             <div class="input">
-                                <button class="btn large" id="admin-upload-computer"><img src="{{ static }}/computer16.png"/> Computer</button>
-                                <button class="btn large" id="admin-upload-link"><img src="{{ static }}/link16.png"/> Link</button>
-                                <span class="help-block">
-                                    <strong>Note:</strong> or drap and drop a file onto this page.
-                                </span>
+                                <input id="admin-resource-path" type="text" class="xlarge"></input>
                             </div>
                         </div>
-                        <div id="admin-file" class="clearfix hidden">
-                            <label>Your file</label>
-                            <div class="input-prepend">
-                                <span class="add-on"><a id="admin-remove-upload" class="delete_input" href="#"><img src="{{ static }}/trash.gif"/></a></span>
-                                <input class="xlarge disabled" id="disabledInput" name="disabledInput" size="30" type="text" placeholder="Gentse Feesten Dag1.csv" disabled="">
-                            </div>                        
+                        <div class="clearfix">
+                            <label>Columns</label>
+                            <div class="input">
+                                <input id="admin-resource-columns" type="text" class="xlarge"></input>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <label>Primary Key</label>
+                            <div class="input">
+                                <input id="admin-resource-pk" type="text" class="xlarge"></input>
+                            </div>
                         </div>
                         <div class="clearfix">
                             <label>Package</label>
                             <div class="input">
-                                <select class="xlarge"></select>
+                                <select id="admin-resource-pkg" class="xlarge"></select>
                             </div>
                         </div>
                         <div class="clearfix">
                             <label>Documentation</label>
                             <div class="input">
-                                <textarea class="xxlarge" rows="10"></textarea>
+                                <textarea id="admin-resource-doc" class="xxlarge" rows="10"></textarea>
                             </div>
                         </div>
-                        <div class="clearfix">
-                            <label>Publish to CKAN</label>
-                            <div class="input">
-                                <input type="checkbox" class="xlarge">
-                            </div>
-                        </div>
+                        <!--<div class="clearfix">-->
+                            <!--<label>Publish to CKAN</label>-->
+                            <!--<div class="input">-->
+                                <!--<input type="checkbox" class="xlarge">-->
+                            <!--</div>-->
+                        <!--</div>-->
                         <div class="actions">
-                            <button type="submit" class="btn primary">Save</button>&nbsp;
+                            <button id="admin-resource-save" type="submit" class="btn primary">Save</button>&nbsp;
                             <button type="reset" class="btn">Cancel</button>
                         </div>
                     </form>
                 </div>
             </div>
-            <div id="admin-profile">
+            <div id="admin-profile" class="hidden">
+                <h1>Profile</h1>
+                <p>Le profile.</p>
             </div>
             <div id="admin-login">
             </div>

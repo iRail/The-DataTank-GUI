@@ -54,7 +54,7 @@ $(document).ready( function() {
     statsModule.change(function(e) {
         hideError();
         var module = statsModule.val();
-        if (module === '-- Select a module --') {
+        if (module === '-- Select a package --') {
             statsResource.empty();
             statsResource.append('<option>-- Select a resource --</option>');
             statsResource.attr('disabled', 'disabled');

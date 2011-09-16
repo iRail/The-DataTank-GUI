@@ -211,7 +211,9 @@ window.App = (function ($, _, Backbone) {
     /*** Resources ***/
 
     window.Resource = Backbone.Model.extend({
-
+        getResourceUrl: function() {
+            return window.__HOSTNAME + window.__SUBPATH + this.get('package') + '/' + this.get('name');
+        },
     });
 
     window.ResourceList = Backbone.Collection.extend({
@@ -271,9 +273,87 @@ window.App = (function ($, _, Backbone) {
             Resources.bind('reset', this.addAll, this);
             Resources.bind('all',   this.render, this);
 
+            this.name = $('#admin-resource-name');
+            this.path = $('#admin-resource-path');
+            this.columns = $('#admin-resource-columns');
+            this.primaryKey = $('#admin-resource-pk');
+            this.pkg = $('#admin-resource-pkg');
+            this.doc = $('#admin-resource-doc');
+            
+            // Fill Resources
             Resources.fetch({success: function() {
-                console.log('fetch pkgs');
+                console.log('fetch res');
             }});
+
+            // Fill Packages for the package select input.
+            var self = this;
+            this.pkg.empty();
+            Packages.fetch({success: function() {
+                console.log('fetch pkgs');
+                self.pkg.append('<option>-- Select a package --</option>');
+                _.each(Packages.models, function(pkg) {
+                    self.pkg.append('<option>' + pkg.get('name') + '</option>');
+                });
+            }});
+        },
+
+        events: {
+            'click #admin-resource-save': 'createResource',
+        },
+
+        validate: function(attr) {
+            console.log('validate');
+            //if (this.name.val() === '' && this.path.val() === '') {
+            //    return 'Fill in all fields can not be empty.';
+            //}
+        },
+
+        createResource: function() {
+            console.log('create resource...');
+            var self = this;
+            var name = this.name.val();
+            var path = this.path.val();
+            var columns = this.columns.val();
+            var primaryKey = this.primaryKey.val();
+            var pkg = this.pkg.val();
+            var doc = this.doc.val();
+            $.ajax({
+                url: window.__HOSTNAME + window.__SUBPATH + pkg +'/' + name,
+                contentType: 'application/json',
+                type: 'PUT',
+                data: {
+                    resource_type: 'generic',
+                    printmethods: 'json;xml;jsonp',
+                    generic_type: 'CSV',
+                    documentation: doc,
+                    uri: path,
+                    columns: columns,
+                    PK: primaryKey,
+                },
+                success: function() {
+                    console.log('Success in creating resource');
+                    self.name.val('');
+                    self.path.val('');
+                    self.columns.val('');
+                    self.primaryKey.val('');
+                    self.pkg.val('');
+                    self.doc.val('');
+                },
+                error: function() {
+                    console.log('FAIL');
+                }
+            });
+
+            //$.ajax('resource_type': 'generic',
+                   //'printmethods': 'json;xml;jsonp',
+                   //'generic_type': 'CSV',
+                   //'documentation': "this is some documentation.",
+                   //'uri': path,
+                   //'columns': columns,
+                   //'pk': primaryKey,
+            //);
+            //Resources.create({name: name});
+            //$('#admin-package-name').val('');
         },
 
         addOne: function(resource) {
@@ -395,7 +475,7 @@ $(function() {
             params.processData = false;
         }
         
-        // Use a different url and method for Packages
+        // Use a different url and method for Packages.
         if (model instanceof Package) {
             if (method === 'create') {
                 params.url = model.getPackageUrl();
@@ -408,6 +488,20 @@ $(function() {
                 params.type = 'DELETE';
             }
         }
+        // Use a different url and method for Resources.
+        if (model instanceof Resource) {
+            if (method === 'create') {
+                params.url = model.getResourceUrl();
+                params.type = 'PUT';
+            } else if (method === 'update') {
+                params.url = model.getResourceUrl();
+                params.type = 'POST';
+            } else if (method === 'delete') {
+                params.url = model.getResourceUrl();
+                params.type = 'DELETE';
+            }
+        }
+
         // Make the request.
         return $.ajax(params);
     };
