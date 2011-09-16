@@ -233,8 +233,12 @@ window.App = (function ($, _, Backbone) {
                         name: name,
                         type: 'CSV',
                         package: package,
-                        last_modified: new Date(),
-                        creation_date: new Date(),
+                        last_modified: new Date(
+                            response[package][name].modification_timestamp * 1000
+                        ),
+                        creation_date: new Date(
+                            response[package][name].creation_timestamp * 1000
+                        ),
                     }
                     resources.push(resource);
                 });
@@ -338,6 +342,9 @@ window.App = (function ($, _, Backbone) {
                     self.primaryKey.val('');
                     self.pkg.val('');
                     self.doc.val('');
+                    Resources.fetch({success: function() {
+                        console.log('fetch res');
+                    }});
                 },
                 error: function() {
                     console.log('FAIL');
