@@ -19,10 +19,10 @@ window.App = (function ($, _, Backbone) {
         _createdPages: [],
         _menu: null,
         _menuItems: {
-            '#admin-admin': '#admin-menu-index',
-            '#admin-packages': '#admin-menu-packages',
-            '#admin-resources': '#admin-menu-resources',
-            '#admin-profile': '#admin-menu-profile',
+            'admin-admin': '#admin-menu-index',
+            'admin-package': '#admin-menu-packages',
+            'admin-resource': '#admin-menu-resources',
+            'admin-profile': '#admin-menu-profile',
         },
 
         initialize: function() {
@@ -33,12 +33,13 @@ window.App = (function ($, _, Backbone) {
             var self = this;
             _.each(this._createdPages, function(p) {
                 p.hide();
-                self.activateMenuItem.attr(p.el.attr('id'));
             });
             page.render();
+            self.activateMenuItem(page.el.attr('id'));
         },
 
         activateMenuItem: function(item) {
+            console.log('item: ', item);
             this._menu.each(function(index) {
                 $(this).removeClass('active');
             });
