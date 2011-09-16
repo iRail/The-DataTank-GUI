@@ -8,16 +8,17 @@ require 'serializer.php';
 require 'Config.class.php';
 require 'TDT.class.php';
 require 'caching/Cache.class.php';
+require 'SlimConfig.class.php';
 
 $app = new Slim(array(
     'debug' => true,
     'log.enable' => true,
     'log.path' => '/tmp/',
     'log.level' => 4,
-    'templates.path' => '/Users/abe/Sites/The-DataTank-GUI/templates/',
+    'templates.path' => SlimConfig::$templates_path,
     'view' => 'TwigView',
-    'subpath' => '/~abe/The-DataTank-GUI/app.php',
-    'static' => '/~abe/The-DataTank-GUI/static',
+    'subpath' => SlimConfig::$app_path,
+    'static' => SlimConfig::$static_path,
     'database.dsn' => 'sqlite:/tmp/tdt.db',
     'database.user' => '',
     'database.password' => '',

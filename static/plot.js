@@ -33,7 +33,8 @@ $(document).ready( function() {
     $.ajax({
         type: 'GET',
         //TODO replace by real url.
-        url: 'http://datatank.demo.ibbt.be/TDTInfo/Resources.json',
+        
+        url: Config.API_HOST+'TDTInfo/Resources.json',
         dataType: 'json',
         success: fillModules,
         error: function() {alert('error');}
@@ -65,7 +66,7 @@ $(document).ready( function() {
             $.ajax({
                 type: 'GET',
                 //TODO replace by real url.
-                url: 'http://datatank.demo.ibbt.be/TDTInfo/Resources/' + module +
+                url: Config.API_HOST+'TDTInfo/Resources/' + module +
                     '.json',
                 dataType: 'json',
                 success: fillResources,
@@ -74,7 +75,7 @@ $(document).ready( function() {
             // draw graph for module with all its resources
             $.ajax({
                 type: 'GET',
-                url: 'http://datatank.demo.ibbt.be/TDTInfo/Queries/' +
+                url: Config.API_HOST+'TDTInfo/Queries/' +
                     module + '.json',
                 dataType: 'json',
                 success: function(result) {
@@ -97,7 +98,7 @@ $(document).ready( function() {
         // draw graph for module with all its resources
         $.ajax({
             type: 'GET',
-            url: 'http://datatank.demo.ibbt.be/TDTInfo/Queries/' +
+            url: Config.API_HOST+'TDTInfo/Queries/' +
                 module + '.json?' + resourceParameter,
             dataType: 'json',
             success: function(result) {

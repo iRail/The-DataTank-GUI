@@ -3,6 +3,7 @@
 {% block js_include %}
 <!--[if lte IE 8]><script type="text/javascript" src="{{ static }}/flot/excanvas.min.js"></script><![endif]-->
 <script type="text/javascript" src="{{ static }}/flot/jquery.flot.js"></script>
+<script type="text/javascript" src="{{ static }}UIConfig.js"></script>
 <script type="text/javascript" src="{{ static }}/plot.js"></script>
 {% endblock %}
 
@@ -17,7 +18,7 @@
         <legend>Statistics parameters</legend>
         <label>Packages: </label>
         <select id="stats-module">
-            <option selected="selected">-- Select a Packages --</option>
+            <option selected="selected">-- Select a package --</option>
         </select>
         <label>Resource: </label>
         <select id="stats-resource" disabled="disabled">
