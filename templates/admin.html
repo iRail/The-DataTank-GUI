@@ -2,13 +2,26 @@
 {% block content %}
 
 <script id="admin-package-template" type="text/x-jquery-tmpl">
-    {{ '{{' }}each packages{{ '}}' }}
-    <tr>
         <td><a href="#"><img src="{{ static }}/trash.gif"/></a></td>
-        <td>${$value.get('name')}</td>
-        <td>${$value.get('create_date').getDate()}, ${$value.get('create_date').getMonthName()} ${$value.get('create_date').getFullYear()}</td>
-    </tr>
-    {{ '{{' }}/each{{ '}}' }}
+        <td>${pkg.get('name')}</td>
+        <td>${pkg.get('creation_date').getDay()}, 
+            ${pkg.get('creation_date').getMonthName()} 
+            ${pkg.get('creation_date').getFullYear()}
+        </td>
+</script>
+<script id="admin-resource-template" type="text/x-jquery-tmpl">
+        <td><a href="#"><img src="{{ static }}/trash.gif"/></a></td>
+        <td>${resource.get('name')}</td>
+        <td>${resource.get('type')}</td>
+        <td>${resource.get('package')}</td>
+        <td>${resource.get('last_modified').getDay()}, 
+            ${resource.get('last_modified').getMonthName()} 
+            ${resource.get('last_modified').getFullYear()}
+        </td>
+        <td>${resource.get('creation_date').getDay()}, 
+            ${resource.get('creation_date').getMonthName()} 
+            ${resource.get('creation_date').getFullYear()}
+        </td>
 </script>
 <div class="topbar-wrapper"><div class="topbar">
                   <div class="fill">
@@ -26,7 +39,7 @@
                   </div><!-- /fill -->
             </div></div>
             
-            <div id="admin-admin">
+            <div id="admin-admin" class="hidden">
                 <h1>Admin</h1>
                 <div class="row">
                     <div class="span7 columns">
@@ -38,10 +51,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><a href="#">Package</a></td>
+                                    <td><a href="#packages">Packages</a></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="#">Resources</a></td>
+                                    <td><a href="#resources">Resources</a></td>
                                 </tr>
                                 <tr>
                                     <td><a href="#">CKAN Repositories</a></td>
@@ -56,7 +69,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><a href="#">Profile</a></td>
+                                    <td><a href="#profile">Profile</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -140,98 +153,19 @@
 
             <div id="admin-resource" class="hidden">
                 <h1>Resources</h1>
-                <table id="admin-resources" class="zebra-striped">
+                <table class="zebra-striped">
                     <thead>
                         <tr>
                             <th>&nbsp;</th>
-                            <th>#</th>
                             <th>Name</th>
                             <th>Type</th>
                             <th>Package</th>
-                            <th>Publication Date</th>
+                            <th>Last Modified</th>
+                            <th>Creation Date</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>1</td>
-                            <td>Dag 1</td>
-                            <td>CSV</td>
-                            <td>Gentse Feesten</td>
-                            <td>24, July 1988</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>2</td>
-                            <td>Dag 2</td>
-                            <td>CSV</td>
-                            <td>Gentse Feesten</td>
-                            <td>24, July 1988</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>3</td>
-                            <td>Dag 3</td>
-                            <td>CSV</td>
-                            <td>Gentse Feesten</td>
-                            <td>24, July 1988</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>4</td>
-                            <td>Dag 4</td>
-                            <td>CSV</td>
-                            <td>Gentse Feesten</td>
-                            <td>24, July 1988</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>5</td>
-                            <td>Dag 5</td>
-                            <td>CSV</td>
-                            <td>Gentse Feesten</td>
-                            <td>24, July 1988</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>6</td>
-                            <td>Dag 6</td>
-                            <td>CSV</td>
-                            <td>Gentse Feesten</td>
-                            <td>24, July 1988</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>7</td>
-                            <td>Dag 7</td>
-                            <td>CSV</td>
-                            <td>Gentse Feesten</td>
-                            <td>24, July 1988</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>8</td>
-                            <td>Dag 8</td>
-                            <td>CSV</td>
-                            <td>Gentse Feesten</td>
-                            <td>24, July 1988</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>9</td>
-                            <td>Dag 9</td>
-                            <td>CSV</td>
-                            <td>Gentse Feesten</td>
-                            <td>24, July 1988</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"/></td>
-                            <td>10</td>
-                            <td>Dag 10</td>
-                            <td>CSV</td>
-                            <td>Gentse Feesten</td>
-                            <td>24, July 1988</td>
-                        </tr>
+                    <tbody id="admin-resources">
+                        
                     </tbody>
                 </table>
 

@@ -7,6 +7,8 @@ window.App = (function ($, _, Backbone) {
         },
     });
 
+    /*** Workspace ***/
+
     window.Workspace = Backbone.Router.extend({
         _index: null,
         _packages: null,
@@ -14,20 +16,26 @@ window.App = (function ($, _, Backbone) {
         _profile: null,
         _login: null,
         _logout: null,
+        _createdPages: [],
         _menu: null,
         _menuItems: {
-            'index': '#admin-menu-index',
-            'packages': '#admin-menu-packages',
-            'resources': '#admin-menu-resources',
-            'profile': '#admin-menu-profile',
+            '#admin-admin': '#admin-menu-index',
+            '#admin-packages': '#admin-menu-packages',
+            '#admin-resources': '#admin-menu-resources',
+            '#admin-profile': '#admin-menu-profile',
         },
 
         initialize: function() {
             this._menu = $('#admin-menu li');
-            this._packages = new PackageAdminView();
-            this._resources = new ResourceAdminView();
-            this._profile = new ProfileAdminView();
-            this._index = new IndexAdminView();
+        },
+
+        activatePage: function(page) {
+            var self = this;
+            _.each(this._createdPages, function(p) {
+                p.hide();
+                self.activateMenuItem.attr(p.el.attr('id'));
+            });
+            page.render();
         },
 
         activateMenuItem: function(item) {
@@ -42,39 +50,39 @@ window.App = (function ($, _, Backbone) {
             '': 'index',
             'packages': 'packages',
             'resources': 'resources',
+            'profile': 'profile',
         },
 
         index: function() {
-            this.activateMenuItem('index');
-            this._index.render();
-            this._packages.hide();
-            this._resources.hide();
-            this._profile.hide();
+            if (!this._index) {
+                this._index = new IndexAdminView();
+                this._createdPages.push(this._index);
+            }
+            this.activatePage(this._index);
         },
 
         packages: function() {
-            this.activateMenuItem('packages');
-            this._packages.render();
-            this._index.hide();
-            this._resources.hide();
-            this._profile.hide();
+            if (!this._packages) {
+                this._packages = new PackageAdminView();
+                this._createdPages.push(this._packages);
+            }
+            this.activatePage(this._packages);
         },
 
         resources: function() {
-            this.activateMenuItem('resources');
-            this._resources.render();
-            this._index.hide();
-            this._packages.hide();
-            this._profile.hide();
+            if (!this._resources) {
+                this._resources = new ResourceAdminView();
+                this._createdPages.push(this._resources);
+            }
+            this.activatePage(this._resources);
         },
 
         profile: function() {
-            console.log('profile');
-            this.activateMenuItem('profile');
-            this._profile.render();
-            this._resources.hide();
-            this._index.hide();
-            this._packages.hide();
+            if (!this._profile) {
+                this._profile = new ProfileAdminView();
+                this._createdPages.push(this._profile);
+            }
+            this.activatePage(this._profile);
         },
 
         login: function() {
@@ -87,6 +95,7 @@ window.App = (function ($, _, Backbone) {
     });
 
     /*** Index ***/
+
     window.IndexAdminView = jQueryView.extend({
         el: '#admin-admin',
 
@@ -110,50 +119,51 @@ window.App = (function ($, _, Backbone) {
     window.PackageCollection = Backbone.Collection.extend({
         model: Package,
 
-        url: '/TDTInfo/Resources',
+        url: '/TDTInfo/Packages',
 
         parse: function(response) {
-            var keys = _.keys(response);
-            console.log('keys: ', keys);
-            return _.map(keys, function(key) {
-                return {name: key, create_date: new Date()} 
+            return _.map(response.Packages, function(o) {
+                // Multiply by 1000 because timestamp is in seconds instead of
+                // microseconds.               
+                return {name: o.package_name, creation_date: new Date(o.timestamp*1000)};
             });
         },
     });
     window.Packages = new PackageCollection();
 
     window.PackageView = jQueryView.extend({
-        el: '#admin-packages',
-        _packageView: null,
+        tagName: 'tr',
 
         template: '#admin-package-template',
 
-        initialize: function() {
+        initialize: function(model) {
             // super
+            //this.model = model;
             jQueryView.prototype.initialize.call(this);
             Packages.bind('add', this.addOne, this);
         },
 
         render: function() {
-            console.log('pkgs: ', Packages.models);
-            this.el.html(this.template.tmpl({packages: Packages.models}));
-            console.log('render');
+            this.el.html(this.template.tmpl({pkg: this.model}));
+            return this;
         },
     });
 
     window.PackageAdminView = jQueryView.extend({
         el: '#admin-package',
-        _packageView: null,
+        //_packageView: null,
 
         initialize: function() {
             // super
             jQueryView.prototype.initialize.call(this);
 
-            this._packageView = new PackageView();
-            Packages.fetch({success: function() {
-                console.log('fetch');
-            }});
+            Packages.bind('add',   this.addOne, this);
+            Packages.bind('reset', this.addAll, this);
+            Packages.bind('all',   this.render, this);
 
+            //this._packageView = new PackageView();
+            Packages.fetch({success: function() {
+            }});
         },
 
         events: {
@@ -167,7 +177,7 @@ window.App = (function ($, _, Backbone) {
             }
         },
 
-        createPackageOnEnter: function() {
+        createPackageOnEnter: function(e) {
             var text = $('#admin-package-name').val();
             if (!text || e.keyCode != 13) return;
             this.createPackage();
@@ -177,7 +187,15 @@ window.App = (function ($, _, Backbone) {
             var name = $('#admin-package-name').val();
             Packages.create({name: name});
             $('#admin-package-name').val('');
-            console.log('Create: ' + name);
+        },
+
+        addOne: function(package) {
+            var view = new PackageView({model: package});
+            this.$("#admin-packages").append(view.render().el);
+        },
+
+        addAll: function() {
+            Packages.each(this.addOne);
         },
 
         render: function() {
@@ -190,21 +208,81 @@ window.App = (function ($, _, Backbone) {
     });
 
     /*** Resources ***/
+
     window.Resource = Backbone.Model.extend({
 
     });
 
     window.ResourceList = Backbone.Collection.extend({
+        model: Resource,
 
+        url: '/TDTInfo/Resources',
+
+        parse: function(response) {
+            var resources = [];
+            var packages = _.keys(response);
+            // Multiply by 1000 because timestamp is in seconds instead of
+            // microseconds.
+            _.each(packages, function(package) {
+                var partialResources = _.keys(response[package]);
+                _.each(partialResources, function(name) {
+                    var resource = {
+                        name: name,
+                        type: 'CSV',
+                        package: package,
+                        last_modified: new Date(),
+                        creation_date: new Date(),
+                    }
+                    resources.push(resource);
+                });
+            });
+            return resources;
+        },
     });
     window.Resources = new ResourceList();
 
     window.ResourceView = jQueryView.extend({
+        tagName: 'tr',
 
+        template: '#admin-resource-template',
+
+        initialize: function(model) {
+            // super
+            //this.model = model;
+            jQueryView.prototype.initialize.call(this);
+            //Resource.bind('add', this.addOne, this);
+        },
+
+        render: function() {
+            this.el.html(this.template.tmpl({resource: this.model}));
+            return this;
+        },
     });
 
     window.ResourceAdminView = jQueryView.extend({
         el: '#admin-resource',
+
+        initialize: function() {
+            // super
+            jQueryView.prototype.initialize.call(this);
+
+            Resources.bind('add',   this.addOne, this);
+            Resources.bind('reset', this.addAll, this);
+            Resources.bind('all',   this.render, this);
+
+            Resources.fetch({success: function() {
+                console.log('fetch pkgs');
+            }});
+        },
+
+        addOne: function(resource) {
+            var view = new ResourceView({model: resource});
+            this.$("#admin-resources").append(view.render().el);
+        },
+
+        addAll: function() {
+            Resources.each(this.addOne);
+        },
 
         render: function() {
             this.el.removeClass('hidden');
@@ -216,6 +294,7 @@ window.App = (function ($, _, Backbone) {
     });
 
     /*** Profile ***/
+
     window.ProfileAdminView = jQueryView.extend({
         el: '#admin-profile',
 
@@ -228,10 +307,11 @@ window.App = (function ($, _, Backbone) {
         },
     })
 
+    /*** Start ***/
+
     var self = {};
     self.start = function() {
         var workspace = new Workspace();
-        console.log('Workspace: ', workspace);
         var r =  Backbone.history.start({
             //pushState: true,
             root: '/~abe/The-DataTank-GUI/app.php/admin'
