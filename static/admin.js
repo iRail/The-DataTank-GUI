@@ -298,6 +298,7 @@ window.App = (function ($, _, Backbone) {
                 _.each(Packages.models, function(pkg) {
                     self.pkg.append('<option>' + pkg.get('name') + '</option>');
                 });
+                $('#admin-package').addClass('hidden');
             }});
         },
 
