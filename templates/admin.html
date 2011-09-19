@@ -2,8 +2,8 @@
 {% block content %}
 
 <script id="admin-package-template" type="text/x-jquery-tmpl">
-        <td><a href="#"><img src="{{ static }}/trash.gif"/></a></td>
-        <td>${pkg.get('name')}</td>
+        <td class="admin-packages-delete"><img src="{{ static }}/trash.gif"/></td>
+        <td class="admin-packages-name">${pkg.get('name')}</td>
         <td>${pkg.get('creation_date').getDay()}, 
             ${pkg.get('creation_date').getMonthName()} 
             ${pkg.get('creation_date').getFullYear()}

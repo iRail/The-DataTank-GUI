@@ -102,3 +102,11 @@ a.delete_input:hover {
 #stats-placeholder td {
     border: 0px solid black;
 }
+
+.modal {
+    //position: relative;
+    //top: auto;
+    //left: auto;
+    //margin: 10px 10px;
+    //z-index: 1
+}

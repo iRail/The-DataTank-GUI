@@ -144,6 +144,19 @@ window.App = (function ($, _, Backbone) {
             Packages.bind('add', this.addOne, this);
         },
 
+        events: {
+            'click .admin-packages-delete': 'deletePackage',
+            'click .admin-packages-name': 'detailPackage',
+        },
+
+        deletePackage: function() {
+            $('body').append('<div class="modal"><div class="modal-header"> <a href="#" class="close">&times;</a> <h3>Modal Heading</h3> </div> <div class="modal-body"> <p>One fine body…</p> </div> <div class="modal-footer"> <a href="#" class="btn primary">Primary</a> <a href="#" class="btn secondary">Secondary</a> </div></div>');
+        },
+
+        detailPackage: function() {
+            alert('detail');
+        },
+
         render: function() {
             this.el.html(this.template.tmpl({pkg: this.model}));
             return this;
