@@ -2,15 +2,29 @@
 {% block content %}
 
 <script id="admin-package-template" type="text/x-jquery-tmpl">
-        <td class="admin-packages-delete"><img src="{{ static }}/trash.gif"/></td>
+        <td class="admin-packages-remove"><a><img src="{{ static }}/trash.gif"/></a></td>
         <td class="admin-packages-name">${pkg.get('name')}</td>
         <td>${pkg.get('creation_date').getDay()}, 
             ${pkg.get('creation_date').getMonthName()} 
             ${pkg.get('creation_date').getFullYear()}
         </td>
 </script>
+<script id="admin-package-remove-modal-template" type="text/x-jquery-tmpl">
+    <div id="admin-modal" class="modal hide">
+        <div class="modal-header">
+            <a href="#" class="close">&times;</a>
+            <h3>Removing Package</h3>
+        </div> <div class="modal-body">
+            <p>Are you shure you want to remove this packages with all of its resources? </p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn primary">Remove</a>
+            <a href="#" class="btn secondary">Cancel</a>
+        </div>
+    </div>
+</script>
 <script id="admin-resource-template" type="text/x-jquery-tmpl">
-        <td><a href="#"><img src="{{ static }}/trash.gif"/></a></td>
+        <td><a data-controls-modal="admin-modal" href="#"><img src="{{ static }}/trash.gif"/></a></td>
         <td>${resource.get('name')}</td>
         <td>${resource.get('type')}</td>
         <td>${resource.get('package')}</td>
@@ -247,4 +261,22 @@
             </div>
             <div id="admin-profile">
             </div>
+        </div>
+{% endblock %}
+
+{% block appendix %}
+
+    <div id="admin-package-remove-modal" class="modal hide">
+        <div class="modal-header">
+            <a href="#" class="close">&times;</a>
+            <h3>Removing Package</h3>
+        </div> <div class="modal-body">
+            <p>Are you shure you want to remove this packages with all of its resources? </p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn primary">Remove</a>
+            <a href="#" class="btn secondary">Cancel</a>
+        </div>
+    </div>
+
 {% endblock %}
