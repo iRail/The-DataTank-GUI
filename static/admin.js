@@ -127,7 +127,7 @@ window.App = (function ($, _, Backbone) {
 
     window.Package = Backbone.Model.extend({
         getPackageUrl: function() {
-            return window._HOSTNAME + '/' + this.get('name') + '/'
+            return window.TDT_URL + '/' + this.get('name') + '/'
         },
     });
 
@@ -284,7 +284,7 @@ window.App = (function ($, _, Backbone) {
 
     window.Resource = Backbone.Model.extend({
         getResourceUrl: function() {
-            return window._HOSTNAME + '/' + this.get('package') + '/' + this.get('name');
+            return window.TDT_URL + '/' + this.get('package') + '/' + this.get('name');
         },
     });
 
@@ -395,7 +395,7 @@ window.App = (function ($, _, Backbone) {
             var pkg = this.pkg.val();
             var doc = this.doc.val();
             $.ajax({
-                url: window._HOSTNAME + '/' + pkg +'/' + name,
+                url: window.TDT_URL + '/' + pkg +'/' + name,
                 contentType: 'application/json',
                 type: 'PUT',
                 data: {
@@ -487,8 +487,6 @@ window.App = (function ($, _, Backbone) {
 });
 
 $(function() {
-    window._HOSTNAME = window.TDT_URL;
-    window._SUBPATH = '/';
     // Monkey path Date to add a function that returns the name of the month.
     Date.prototype.getMonthName = function() {
         var months = {
@@ -565,7 +563,7 @@ $(function() {
                 params.type = 'POST';
             } else if (method === 'delete') {
                 console.log('==========================================================>Sync: delete pkg');
-                params.url = window._HOSTNAME + '/' + params.model.get('name');
+                params.url = window.TDT_URL + '/' + params.model.get('name');
                 params.type = 'DELETE';
             }
         }
