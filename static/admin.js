@@ -34,6 +34,13 @@ window.App = (function ($, _, Backbone) {
 
         initialize: function() {
             this._menu = $('#admin-menu li');
+            // Fill packages and resources.
+            Packages.fetch({success: function() {
+                console.log('fetch pkg');
+            }});
+            Resources.fetch({success: function() {
+                console.log('fetch res');
+            }});
         },
 
         activatePage: function(page) {
@@ -120,7 +127,7 @@ window.App = (function ($, _, Backbone) {
 
     window.Package = Backbone.Model.extend({
         getPackageUrl: function() {
-            return window.__HOSTNAME + window.__SUBPATH + this.get('name') + '/'
+            return window._HOSTNAME + '/' + this.get('name') + '/'
         },
     });
 
@@ -145,12 +152,38 @@ window.App = (function ($, _, Backbone) {
         initialize: function(params) {
             // Super
             jQueryView.prototype.initialize.call(this);
-            this.package = params.package;
-            this.el.find('.modal-header h3').html('Removing "' + params.package + '"');
+            var that = this;
+            //this.package = params.package;
+            this.resources = Resources.filter(function(resource) {
+                return resource.get('package') === that.model.get('name');
+            });
+            this.el.find('.modal-header h3').html('Removing "' + this.model.get('name') + '"');
+            this.el.find('.modal-body').html('Are you shure you want to remove this packages with all of its resources?<ul>');
+            // TODO add list of all resources of package.
+            //$.tmpl('#admin-package-remove-resources-modal', this.resources).appendTo(
+                //this.el.find('.modal-body')
+            //);
+
+            // Show modal box
             this.el.modal({
                 backdrop: true,
                 keyboard: true,
             });
+        },
+
+        events: {
+            'click #admin-package-remove-remove': 'removePackage',
+            'click #admin-package-remove-cancel': 'cancel',
+        },
+
+        removePackage: function() {
+            console.log('Remove');
+            Packages.remove(this.model, {silent: true});
+        },
+
+        cancel: function() {
+            console.log('Cancel remove');
+            this.el.modal('toggle')
         },
     });
 
@@ -174,7 +207,7 @@ window.App = (function ($, _, Backbone) {
         },
 
         removePackage: function() {
-            var modal = new PackageRemoveModal({package: 'test'});
+            var modal = new PackageRemoveModal({model: this.model});
             //$('body').append(this.removeModalTemplate.tmpl());
             //$('body').append('<div class="modal fade"><div class="modal-header"> <a href="#" class="close">&times;</a> <h3>Modal Heading</h3> </div> <div class="modal-body"> <p>One fine body…</p> </div> <div class="modal-footer"> <a href="#" class="btn primary">Primary</a> <a href="#" class="btn secondary">Secondary</a> </div></div>');
         },
@@ -251,7 +284,7 @@ window.App = (function ($, _, Backbone) {
 
     window.Resource = Backbone.Model.extend({
         getResourceUrl: function() {
-            return window.__HOSTNAME + window.__SUBPATH + this.get('package') + '/' + this.get('name');
+            return window._HOSTNAME + '/' + this.get('package') + '/' + this.get('name');
         },
     });
 
@@ -362,7 +395,7 @@ window.App = (function ($, _, Backbone) {
             var pkg = this.pkg.val();
             var doc = this.doc.val();
             $.ajax({
-                url: window.__HOSTNAME + window.__SUBPATH + pkg +'/' + name,
+                url: window._HOSTNAME + '/' + pkg +'/' + name,
                 contentType: 'application/json',
                 type: 'PUT',
                 data: {
@@ -454,8 +487,8 @@ window.App = (function ($, _, Backbone) {
 });
 
 $(function() {
-    window.__HOSTNAME = 'http://localhost';
-    window.__SUBPATH = '/';
+    window._HOSTNAME = window.TDT_URL;
+    window._SUBPATH = '/';
     // Monkey path Date to add a function that returns the name of the month.
     Date.prototype.getMonthName = function() {
         var months = {
@@ -531,7 +564,8 @@ $(function() {
                 params.url = model.getPackageUrl();
                 params.type = 'POST';
             } else if (method === 'delete') {
-                params.url = model.getPackageUrl();
+                console.log('==========================================================>Sync: delete pkg');
+                params.url = window._HOSTNAME + '/' + params.model.get('name');
                 params.type = 'DELETE';
             }
         }

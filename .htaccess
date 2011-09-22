@@ -1,25 +1,9 @@
+# Some hosts may require you to use the `RewriteBase` directive.
+# If you need to use the `RewriteBase` directive, it should be the
+# absolute physical path to the directory that contains this htaccess file.
 #
-# The DataTank .htaccess file
-#
-# © iRail vzw/asbl
-# by Jan Vansteenlandt
-# by Pieter Colpaert
-# by Werner Laurensse
-#
-# move to the root folder 
-#
+# RewriteBase /
 
-Options -Indexes
-Options +FollowSymLinks
-
-AddDefaultCharset UTF-8
-
-# mod rewrite, because that's how I roll.
-
-<IfModule mod_rewrite.c>
-RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /app.php
-</IfModule>
+RewriteRule ^(.*)$ app.php [QSA,L]
 

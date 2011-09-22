@@ -21,7 +21,7 @@
 include_once("TDTMemCache.class.php");
 include_once("TDTNoCache.class.php");
 
-abstract class Cache{
+abstract class Cache {
     private static $instance;
 
     protected function __construct(){
@@ -29,7 +29,8 @@ abstract class Cache{
 
     public static function getInstance(){
         if(!isset(self::$instance)){
-            $cacheclass = "TDT".Config::$CACHE_SYSTEM;
+            $app = $Slim::getInstance('TheDataTank');
+            $cacheclass = "TDT" . $app->config('tdt.cache-system');
             self::$instance = new $cacheclass();
         }
         return self::$instance;

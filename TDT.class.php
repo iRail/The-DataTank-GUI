@@ -1,4 +1,4 @@
-<?php
+ <?php
 /**
  * Helper classes that are specifically designed for TDT. When developing modules you can use these for better performance
  * 
@@ -29,20 +29,20 @@ class TDT{
         $uri = @parse_url($url);
 
         if ($uri == FALSE) {
-            throw new Exception($url);
+            throw new CouldNotParseUrlTDTException($url);
         }
         //maybe our result is the cache. If so, return the cache value
-        $cache = Cache::getInstance();
-        $result = $cache->get($url);
-        if(!is_null($result)){
-            return $result;
-        }
+        //$cache = Cache::getInstance();
+        //$result = $cache->get($url);
+        //if(!is_null($result)){
+            //return $result;
+        //}
 
         //in any other case, just continue and add it to the cache afterwards
         $result = new StdClass();
 
         if (!isset($uri['scheme'])) {
-            throw new Exception("Forgot to add http(s)? " . $url);    
+            throw new CouldNotParseUrlTDTException("Forgot to add http(s)? " . $url);    
         }
 
         self::timer_start(__FUNCTION__);
@@ -278,7 +278,7 @@ class TDT{
         if(isset($options["cache-time"])){ //are we sure we're going to call the option cache-time?
             $cachingtime = $options["cache-time"];
         }
-        $cache->set($url, $result, $cachingtime);
+        //$cache->set($url, $result, $cachingtime);
 
         return $result;
     }
@@ -375,5 +375,3 @@ class TDT{
         return $pageURL;
     }
 }
-
-?>

@@ -1,3 +1,4 @@
+config.php
 Config.class.php
 documentation/Documentation.aux
 documentation/Documentation.dvi
@@ -15,4 +16,3 @@ Makefile
 */*/.DS_Store
 */*/*/.DS_Store
 */*/*/*/.DS_Store
-SlimConfig.class.php

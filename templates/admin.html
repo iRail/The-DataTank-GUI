@@ -9,6 +9,9 @@
             ${pkg.get('creation_date').getFullYear()}
         </td>
 </script>
+<script id="admin-package-remove-resources-modal" type="text/x-jquery-tmpl">
+    <li>${res}</li>
+</script>
 <script id="admin-package-remove-modal-template" type="text/x-jquery-tmpl">
     <div id="admin-modal" class="modal hide">
         <div class="modal-header">
@@ -18,8 +21,8 @@
             <p>Are you shure you want to remove this packages with all of its resources? </p>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn primary">Remove</a>
-            <a href="#" class="btn secondary">Cancel</a>
+            <a href="#" id="admin-package-remove-remove" class="btn primary">Remove</a>
+            <a href="#" id="admin-package-remove-cancel" class="btn secondary">Cancel</a>
         </div>
     </div>
 </script>
@@ -274,8 +277,8 @@
             <p>Are you shure you want to remove this packages with all of its resources? </p>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn primary">Remove</a>
-            <a href="#" class="btn secondary">Cancel</a>
+            <a href="" id="admin-package-remove-remove" class="btn primary">Remove</a>
+            <a href="" id="admin-package-remove-cancel" class="btn secondary">Cancel</a>
         </div>
     </div>
 

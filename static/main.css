@@ -109,8 +109,8 @@ a.delete_input:hover {
 }
 
 .modal {
-    top: auto;
-    bottom: 50%;
+    //top: auto;
+    //bottom: 50%;
     /*position: relative;*/
     //top: auto;
     //left: auto;
