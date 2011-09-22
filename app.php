@@ -27,6 +27,7 @@ R::setup($app->config('database.dsn'),
          $app->config('database.password')
 );
 
+// This handler prints config values used by the javascript app.
 $app->get('/ui-config.js', function() use ($app) {
     print('var TDT_URL = "' . $app->config('tdt-url') . '";;');
     $app->response()->header('Content-Type', 'application/javascript');
@@ -38,7 +39,7 @@ $app->get('/', function() use ($app) {
 });
 
 $app->get('/docs', function() use ($app) {
-    $url = $app->config('hostname') . $app->config('subdir') . '/' . "TDTInfo/Resources.json";
+    $url = $app->config('hostname') . '/TDTInfo/Resources.json';
     TDT::HttpRequest($url);
     $docs = json_decode(TDT::HttpRequest($url)->data);
     $modules = array();
@@ -59,8 +60,7 @@ $app->get('/docs', function() use ($app) {
 });
 
 $app->get('/docs/:module/:resource', function($module, $resource) use ($app) {
-    $url = Config::$HOSTNAME . Config::$SUBDIR .
-        "TDTInfo/Resources/$module/$resource.json";
+    $url = $app->config('hostname') . "/TDTInfo/Resources/$module/$resource.json";
     $r = json_decode(TDT::HttpRequest($url)->data);
 
     //get a sequence of the parameters
@@ -76,7 +76,7 @@ $app->get('/docs/:module/:resource', function($module, $resource) use ($app) {
     }
 
     // build the proper URL's to invoke when doing a call for a certain resource
-    $url = Config::$HOSTNAME . CONFIG::$SUBDIR."$module/$resource/$args";
+    $url = $app->config('hostname') . $app->config('subdir') . "/$module/$resource/$args";
 
     $app->render('doc.html',
         array('static' => $app->config('static'), 'subdir' => $app->config('subdir'),
