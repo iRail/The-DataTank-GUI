@@ -35,12 +35,12 @@ window.App = (function ($, _, Backbone) {
         initialize: function() {
             this._menu = $('#admin-menu li');
             // Fill packages and resources.
-            Packages.fetch({success: function() {
-                console.log('fetch pkg');
-            }});
-            Resources.fetch({success: function() {
-                console.log('fetch res');
-            }});
+            //Packages.fetch({success: function() {
+                //console.log('fetch pkg');
+            //}});
+            //Resources.fetch({success: function() {
+                //console.log('fetch res');
+            //}});
         },
 
         activatePage: function(page) {
@@ -235,8 +235,14 @@ window.App = (function ($, _, Backbone) {
             Packages.bind('all',   this.render, this);
 
             //this._packageView = new PackageView();
-            Packages.fetch({success: function() {
-            }});
+            Packages.fetch({
+                success: function() {
+                    console.log('Successfully fetched pkgs. (pav)');
+                },
+                error: function() {
+                    console.log('Error while fetching pkgs. (pav)');
+                },
+            });
         },
 
         events: {
@@ -357,21 +363,30 @@ window.App = (function ($, _, Backbone) {
             this.doc = $('#admin-resource-doc');
             
             // Fill Resources
-            Resources.fetch({success: function() {
-                console.log('fetch res');
-            }});
+            Resources.fetch({
+                success: function() {
+                    console.log('Successfully fetched recs. (rav)');
+                },
+                error: function() {
+                    console.log('Error while fetching recs. (rav)');
+                },
+            });
 
             // Fill Packages for the package select input.
             var self = this;
             this.pkg.empty();
-            Packages.fetch({success: function() {
-                console.log('fetch pkgs');
-                self.pkg.append('<option>-- Select a package --</option>');
-                _.each(Packages.models, function(pkg) {
-                    self.pkg.append('<option>' + pkg.get('name') + '</option>');
-                });
-                $('#admin-package').addClass('hidden');
-            }});
+            self.pkg.append('<option>-- Select a package --</option>');
+            _.each(Packages.models, function(pkg) {
+                self.pkg.append('<option>' + pkg.get('name') + '</option>');
+            });
+            //Packages.fetch({success: function() {
+                //console.log('fetch pkgs');
+                //self.pkg.append('<option>-- Select a package --</option>');
+                //_.each(Packages.models, function(pkg) {
+                    //self.pkg.append('<option>' + pkg.get('name') + '</option>');
+                //});
+                //$('#admin-package').addClass('hidden');
+            //}});
         },
 
         events: {
@@ -415,9 +430,14 @@ window.App = (function ($, _, Backbone) {
                     self.primaryKey.val('');
                     self.pkg.val('');
                     self.doc.val('');
-                    Resources.fetch({success: function() {
-                        console.log('fetch res');
-                    }});
+                    Resources.fetch({
+                        success: function() {
+                            console.log('Successfully fetched recs. (rav)');
+                        },
+                        error: function() {
+                            console.log('Error while fetching recs. (rav)');
+                        },
+                    });
                 },
                 error: function() {
                     console.log('FAIL');
