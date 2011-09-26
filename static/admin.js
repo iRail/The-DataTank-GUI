@@ -119,11 +119,19 @@ window.App = (function ($, _, Backbone) {
         },
 
         login: function() {
-
+            if (!this._login) {
+                this._login = new LoginAdminView();
+                this._createdPages.push(this._login);
+            }
+            this.activatePage(this._login);
         },
 
         logout: function() {
-
+            if (!this._login) {
+                this._login = new LoginAdminView();
+                this._createdPages.push(this._login);
+            }
+            this.activatePage(this._login);
         },
     });
 
@@ -289,14 +297,6 @@ window.App = (function ($, _, Backbone) {
         addAll: function() {
             Packages.each(this.addOne);
         },
-
-        render: function() {
-            this.el.removeClass('hidden');
-        },
-
-        hide: function() {
-            this.el.addClass('hidden');
-        },
     });
 
     window.PackageDetailsAdminView = AdminView.extend({
@@ -402,14 +402,6 @@ window.App = (function ($, _, Backbone) {
             _.each(Packages.models, function(pkg) {
                 self.pkg.append('<option>' + pkg.get('name') + '</option>');
             });
-            //Packages.fetch({success: function() {
-                //console.log('fetch pkgs');
-                //self.pkg.append('<option>-- Select a package --</option>');
-                //_.each(Packages.models, function(pkg) {
-                    //self.pkg.append('<option>' + pkg.get('name') + '</option>');
-                //});
-                //$('#admin-package').addClass('hidden');
-            //}});
         },
 
         events: {
@@ -498,7 +490,27 @@ window.App = (function ($, _, Backbone) {
             // Super
             AdminView.prototype.initialize.call(this);
         },
-    })
+    });
+
+    /*** Login & Logout ***/
+
+    window.LoginAdminView = AdminView.extend({
+        el: "#admin-login",
+
+        initialize: function() {
+            // Super
+            AdminView.prototype.initialize.call(this);
+        },
+    });
+
+    window.LogoutAdminView = AdminView.extend({
+        el: "#admin-logout",
+
+        initialize: function() {
+            // Super
+            AdminView.prototype.initialize.call(this);
+        },
+    });
 
     /*** Start ***/
 
