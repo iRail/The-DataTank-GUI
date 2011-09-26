@@ -10,6 +10,21 @@ window.App = (function ($, _, Backbone) {
         },
     });
 
+    window.AdminView = jQueryView.extend({
+        initialize: function() {
+            // Super
+            jQueryView.prototype.initialize.call(this);
+        },
+            
+        render: function() {
+            this.el.removeClass('hidden');
+        },
+
+        hide: function() {
+            this.el.addClass('hidden');
+        },
+    });
+
     window.ModalBox = Backbone.View.extend({
         el: '#admin-package-remove-modal',
     });
@@ -34,13 +49,6 @@ window.App = (function ($, _, Backbone) {
 
         initialize: function() {
             this._menu = $('#admin-menu li');
-            // Fill packages and resources.
-            //Packages.fetch({success: function() {
-                //console.log('fetch pkg');
-            //}});
-            //Resources.fetch({success: function() {
-                //console.log('fetch res');
-            //}});
         },
 
         activatePage: function(page) {
@@ -64,7 +72,9 @@ window.App = (function ($, _, Backbone) {
         routes: {
             '': 'index',
             'packages': 'packages',
+            'packages/:name', 'packageDetails',
             'resources': 'resources',
+            'resources/:name', 'resourceDetails',
             'profile': 'profile',
         },
 
@@ -84,12 +94,20 @@ window.App = (function ($, _, Backbone) {
             this.activatePage(this._packages);
         },
 
+        packageDetails: function(name) {
+
+        },
+
         resources: function() {
             if (!this._resources) {
                 this._resources = new ResourceAdminView();
                 this._createdPages.push(this._resources);
             }
             this.activatePage(this._resources);
+        },
+
+        resourceDetails: function(name) {
+
         },
 
         profile: function() {
@@ -111,16 +129,14 @@ window.App = (function ($, _, Backbone) {
 
     /*** Index ***/
 
-    window.IndexAdminView = jQueryView.extend({
+    window.IndexAdminView = AdminView.extend({
         el: '#admin-admin',
 
-        render: function() {
-            this.el.removeClass('hidden');
+        initialize: function() {
+            // Super
+            AdminView.prototype.initialize.call(this);
         },
 
-        hide: function() {
-            this.el.addClass('hidden');
-        },
     });
 
     /*** Package ***/
@@ -208,8 +224,6 @@ window.App = (function ($, _, Backbone) {
 
         removePackage: function() {
             var modal = new PackageRemoveModal({model: this.model});
-            //$('body').append(this.removeModalTemplate.tmpl());
-            //$('body').append('<div class="modal fade"><div class="modal-header"> <a href="#" class="close">&times;</a> <h3>Modal Heading</h3> </div> <div class="modal-body"> <p>One fine body…</p> </div> <div class="modal-footer"> <a href="#" class="btn primary">Primary</a> <a href="#" class="btn secondary">Secondary</a> </div></div>');
         },
 
         detailPackage: function() {
@@ -222,13 +236,12 @@ window.App = (function ($, _, Backbone) {
         },
     });
 
-    window.PackageAdminView = jQueryView.extend({
+    window.PackageAdminView = AdminView.extend({
         el: '#admin-package',
-        //_packageView: null,
 
         initialize: function() {
-            // super
-            jQueryView.prototype.initialize.call(this);
+            // Super
+            AdminView.prototype.initialize.call(this);
 
             Packages.bind('add',   this.addOne, this);
             Packages.bind('reset', this.addAll, this);
@@ -285,6 +298,16 @@ window.App = (function ($, _, Backbone) {
             this.el.addClass('hidden');
         },
     });
+
+    window.PackageDetailsAdminView = AdminView.extend({
+        el: 'admin-package-details',
+
+        initialize: function() {
+            // Super
+            AdminView.prototype.initialize.call(this);
+        },
+    });
+
 
     /*** Resources ***/
 
@@ -344,12 +367,12 @@ window.App = (function ($, _, Backbone) {
         },
     });
 
-    window.ResourceAdminView = jQueryView.extend({
+    window.ResourceAdminView = AdminView.extend({
         el: '#admin-resource',
 
         initialize: function() {
-            // super
-            jQueryView.prototype.initialize.call(this);
+            // Super
+            AdminView.prototype.initialize.call(this);
 
             Resources.bind('add',   this.addOne, this);
             Resources.bind('reset', this.addAll, this);
@@ -464,27 +487,16 @@ window.App = (function ($, _, Backbone) {
         addAll: function() {
             Resources.each(this.addOne);
         },
-
-        render: function() {
-            this.el.removeClass('hidden');
-        },
-
-        hide: function() {
-            this.el.addClass('hidden');
-        },
     });
 
     /*** Profile ***/
 
-    window.ProfileAdminView = jQueryView.extend({
+    window.ProfileAdminView = AdminView.extend({
         el: '#admin-profile',
 
-        render: function() {
-            this.el.removeClass('hidden');
-        },
-
-        hide: function() {
-            this.el.addClass('hidden');
+        initialize: function() {
+            // Super
+            AdminView.prototype.initialize.call(this);
         },
     })
 
