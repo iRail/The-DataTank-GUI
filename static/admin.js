@@ -29,112 +29,6 @@ window.App = (function ($, _, Backbone) {
         el: '#admin-package-remove-modal',
     });
 
-    /*** Workspace ***/
-
-    window.Workspace = Backbone.Router.extend({
-        _index: null,
-        _packages: null,
-        _resources: null,
-        _profile: null,
-        _login: null,
-        _logout: null,
-        _createdPages: [],
-        _menu: null,
-        _menuItems: {
-            'admin-admin': '#admin-menu-index',
-            'admin-package': '#admin-menu-packages',
-            'admin-resource': '#admin-menu-resources',
-            'admin-profile': '#admin-menu-profile',
-        },
-
-        initialize: function() {
-            this._menu = $('#admin-menu li');
-        },
-
-        activatePage: function(page) {
-            var self = this;
-            _.each(this._createdPages, function(p) {
-                p.hide();
-            });
-            page.render();
-            self.activateMenuItem(page.el.attr('id'));
-        },
-
-        activateMenuItem: function(item) {
-            console.log('item: ', item);
-            this._menu.each(function(index) {
-                $(this).removeClass('active');
-            });
-            console.log('Menu: ', item);
-            $(this._menuItems[item]).addClass('active');
-        },
-
-        routes: {
-            '': 'index',
-            'packages': 'packages',
-            'packages/:name', 'packageDetails',
-            'resources': 'resources',
-            'resources/:name', 'resourceDetails',
-            'profile': 'profile',
-        },
-
-        index: function() {
-            if (!this._index) {
-                this._index = new IndexAdminView();
-                this._createdPages.push(this._index);
-            }
-            this.activatePage(this._index);
-        },
-
-        packages: function() {
-            if (!this._packages) {
-                this._packages = new PackageAdminView();
-                this._createdPages.push(this._packages);
-            }
-            this.activatePage(this._packages);
-        },
-
-        packageDetails: function(name) {
-
-        },
-
-        resources: function() {
-            if (!this._resources) {
-                this._resources = new ResourceAdminView();
-                this._createdPages.push(this._resources);
-            }
-            this.activatePage(this._resources);
-        },
-
-        resourceDetails: function(name) {
-
-        },
-
-        profile: function() {
-            if (!this._profile) {
-                this._profile = new ProfileAdminView();
-                this._createdPages.push(this._profile);
-            }
-            this.activatePage(this._profile);
-        },
-
-        login: function() {
-            if (!this._login) {
-                this._login = new LoginAdminView();
-                this._createdPages.push(this._login);
-            }
-            this.activatePage(this._login);
-        },
-
-        logout: function() {
-            if (!this._login) {
-                this._login = new LoginAdminView();
-                this._createdPages.push(this._login);
-            }
-            this.activatePage(this._login);
-        },
-    });
-
     /*** Index ***/
 
     window.IndexAdminView = AdminView.extend({
@@ -410,9 +304,6 @@ window.App = (function ($, _, Backbone) {
 
         validate: function(attr) {
             console.log('validate');
-            //if (this.name.val() === '' && this.path.val() === '') {
-            //    return 'Fill in all fields can not be empty.';
-            //}
         },
 
         createResource: function() {
@@ -458,17 +349,6 @@ window.App = (function ($, _, Backbone) {
                     console.log('FAIL');
                 }
             });
-
-            //$.ajax('resource_type': 'generic',
-                   //'printmethods': 'json;xml;jsonp',
-                   //'generic_type': 'CSV',
-                   //'documentation': "this is some documentation.",
-                   //'uri': path,
-                   //'columns': columns,
-                   //'pk': primaryKey,
-            //);
-            //Resources.create({name: name});
-            //$('#admin-package-name').val('');
         },
 
         addOne: function(resource) {
@@ -512,6 +392,157 @@ window.App = (function ($, _, Backbone) {
         },
     });
 
+    /*** Workspace ***/
+
+    window.Workspace = Backbone.Router.extend({
+        _index: null,
+        _packages: null,
+        _resources: null,
+        _profile: null,
+        _login: null,
+        _logout: null,
+        _handlePage: null,
+        _createdPages: [],
+        _menu: null,
+        _menuItems: {
+            'admin-admin': '#admin-menu-i   ndex',
+            'admin-package': '#admin-menu-packages',
+            'admin-resource': '#admin-menu-resources',
+            'admin-profile': '#admin-menu-profile',
+            'admin-login': '#admin-menu-login',
+            'admin-logout': '#admin-menu-logout',
+        },
+
+        initialize: function() {
+            this._menu = $('#admin-menu li');
+            _.extend(this._menu, $('.secondary-nav li'));
+
+            // A generic page handler that returns a function that creates a page
+            // handler for `page` and creates a coresponding view with `view`.
+            //this.prototype._handlePage = function(page, view) {
+                //var self = this;
+                //var func = function() {
+                    //if (!self.page) {
+                        //self.page = new self.view();
+                        //self._createdPages.push(self.page);
+                    //}
+                    //self.activatePage(self.page);
+                //}
+                //return func;
+            //};
+        },
+
+        activatePage: function(page) {
+            var self = this;
+            _.each(this._createdPages, function(p) {
+                p.hide();
+            });
+            page.render();
+            self.activateMenuItem(page.el.attr('id'));
+        },
+
+        activateMenuItem: function(item) {
+            console.log('item: ', item);
+            this._menu.each(function(index) {
+                $(this).removeClass('active');
+            });
+            console.log('Menu: ', item);
+            $(this._menuItems[item]).addClass('active');
+        },
+
+        routes: {
+            '': 'index',
+            'packages': 'packages',
+            'packages/:name': 'packageDetails',
+            'resources': 'resources',
+            'resources/:name': 'resourceDetails',
+            'profile': 'profile',
+            'login': 'login',
+            'logout': 'logout',
+        },
+
+        // A generic page handler that returns a function that creates a page
+        // handler for `page` and creates a coresponding view with `view`.
+        _handlePage: function(page, view) {
+            var self = this;
+            var func = function() {
+                if (!self.page) {
+                    self.page = new self.view();
+                    self._createdPages.push(self.page);
+                }
+                self.activatePage(self.page);
+            }
+            return func;
+        },
+
+        // TODO fix this error.
+        index: this._handlePage(this._index, IndexAdminView),
+
+        //index: function() {
+            //if (!this._index) {
+                //this._index = new IndexAdminView();
+                //this._createdPages.push(this._index);
+            //}
+            //this.activatePage(this._index);
+        //},
+
+        packages: function() {
+            if (!this._packages) {
+                this._packages = new PackageAdminView();
+                this._createdPages.push(this._packages);
+            }
+            this.activatePage(this._packages);
+        },
+
+        packageDetails: function(name) {
+            if (!this._packageDetails) {
+                this._packageDetails = new ResourceAdminView();
+                this._createdPages.push(this._packageDetails);
+            }
+            this.activatePage(this._packageDetails);
+        },
+
+        resources: function() {
+            if (!this._resources) {
+                this._resources = new ResourceAdminView();
+                this._createdPages.push(this._resources);
+            }
+            this.activatePage(this._resources);
+        },
+
+        resourceDetails: function(name) {
+            if (!this._resourceDetails) {
+                this._resourceDetails = new ResourceAdminView();
+                this._createdPages.push(this._resourceDetails);
+            }
+            this.activatePage(this._resourceDetails);
+        },
+
+        profile: function() {
+            if (!this._profile) {
+                this._profile = new ProfileAdminView();
+                this._createdPages.push(this._profile);
+            }
+            this.activatePage(this._profile);
+        },
+
+        login: function() {
+            if (!this._login) {
+                this._login = new LoginAdminView();
+                this._createdPages.push(this._login);
+            }
+            this.activatePage(this._login);
+        },
+
+        logout: function() {
+            if (!this._login) {
+                this._login = new LoginAdminView();
+                this._createdPages.push(this._login);
+            }
+            this.activatePage(this._login);
+        },
+    });
+
     /*** Start ***/
 
     var self = {};
@@ -521,11 +552,6 @@ window.App = (function ($, _, Backbone) {
             //pushState: true,
             root: '/~abe/The-DataTank-GUI/app.php/admin'
         });
-        //Packages.fetch({success: function() {
-            //new PackageAdminView();
-            //var v = new PackageView();
-            //v.render();
-        //}});
     };
     return self;
 });
