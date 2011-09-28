@@ -89,9 +89,10 @@ $app->get('/stats', function() use ($app) {
         array('static' => $app->config('static'), 'subdir' => $app->config('subdir')));
 });
 
-$app->get('/admin', function() use ($app) {
+$app->get('/admin', function() use ($app, $appConfigDevelopment) {
     $app->render('admin.html',
-        array('static' => $app->config('static'), 'subdir' => $app->config('subdir')));
+        array('static' => $app->config('static'), 'subdir' => $app->config('subdir'),
+              'config' => $appConfigDevelopment));
 });
 
 require 'api.php';

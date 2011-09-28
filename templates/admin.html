@@ -260,14 +260,66 @@
                 </div>
             </div>
 
-            <div id="admin-resource-details" class="hidden">
+            <div id="admin-resource-details">
                 <h1>Resource details</h1>
             </div>
             
-            <div id="admin-profile" class="hidden">
+            <div id="admin-profile" class="">
                 <h1>Profile</h1>
                 <img src="{{ static }}/avatar.png"/>
                 <p>Le profile.</p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Debug</td>
+                            <td>{{ config.debug }}</td>
+                        </tr>
+                        <tr>
+                            <td>Logging enabled</td>
+                            <td>{{ config.enable }}</td>
+                        </tr>
+                        <tr>
+                            <td>Logging path</td>
+                            <td>{{ config.path }}</td>
+                        </tr>
+                        <tr>
+                            <td>Loggin level</td>
+                            <td>{{ config.level }}</td>
+                        </tr>
+                        <tr>
+                            <td>Templates path</td>
+                            <td>{{ config['templates.path'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Template engine</td>
+                            <td>{{ config.view }}</td>
+                        </tr>
+                        <tr>
+                            <td>Hostname</td>
+                            <td>{{ config.hostname }}</td>
+                        </tr>
+                        <tr>
+                            <td>Subdir</td>
+                            <td>{{ config.subdir }}</td>
+                        </tr>
+                        <tr>
+                            <td>Static</td>
+                            <td>{{ config.static }}</td>
+                        </tr>
+                        <tr>
+                            <td>The Data-Tank Url</td>
+                            <td>{{ config['tdt-url'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Database DSN</td>
+                            <td>{{ config['database.dsn'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Database user</td>
+                            <td>{{ config['database.user'] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div id="admin-login" class="hidden">
                 <form>
@@ -290,8 +342,6 @@
                         </div>
                     </fieldset>
                 </form>
-            </div>
-            <div id="admin-profile">
             </div>
         </div>
 {% endblock %}
