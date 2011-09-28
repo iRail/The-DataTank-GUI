@@ -258,17 +258,21 @@
                         </div>
                     </form>
                 </div>
-            </div>
 
-            <div id="admin-resource-details">
+            <div id="admin-resource-details" class="hidden">
                 <h1>Resource details</h1>
             </div>
             
-            <div id="admin-profile" class="">
+            <div id="admin-profile" class="hidden">
                 <h1>Profile</h1>
                 <img src="{{ static }}/avatar.png"/>
-                <p>Le profile.</p>
-                <table>
+                <table class="zebra-stribed">
+                    <thead>
+                        <tr>
+                            <th>Setting</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr>
                             <td>Debug</td>

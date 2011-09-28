@@ -472,11 +472,11 @@ window.App = (function ($, _, Backbone) {
                 }
                 self.activatePage(self.page);
             }
-            return func;
+            return func();
         },
 
         // TODO fix this error.
-        index: this._handlePage,
+        index: function() (this._handlePage(this._index, IndexAdminView)),
 
         //index: function() {
             //if (!this._index) {
