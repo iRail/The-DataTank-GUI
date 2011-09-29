@@ -416,20 +416,6 @@ window.App = (function ($, _, Backbone) {
         initialize: function() {
             this._menu = $('#admin-menu li');
             _.extend(this._menu, $('.secondary-nav li'));
-
-            // A generic page handler that returns a function that creates a page
-            // handler for `page` and creates a coresponding view with `view`.
-            //this.prototype._handlePage = function(page, view) {
-                //var self = this;
-                //var func = function() {
-                    //if (!self.page) {
-                        //self.page = new self.view();
-                        //self._createdPages.push(self.page);
-                    //}
-                    //self.activatePage(self.page);
-                //}
-                //return func;
-            //};
         },
 
         activatePage: function(page) {
@@ -467,80 +453,29 @@ window.App = (function ($, _, Backbone) {
             var self = this;
             var func = function() {
                 if (!self.page) {
-                    self.page = new self.view();
-                    self._createdPages.push(self.page);
+                    page = new view();
+                    self._createdPages.push(page);
                 }
-                self.activatePage(self.page);
+                self.activatePage(page);
             }
             return func();
         },
 
-        // TODO fix this error.
-        index: function() (this._handlePage(this._index, IndexAdminView)),
+        index: function() {this._handlePage(this._index, IndexAdminView)},
 
-        //index: function() {
-            //if (!this._index) {
-                //this._index = new IndexAdminView();
-                //this._createdPages.push(this._index);
-            //}
-            //this.activatePage(this._index);
-        //},
+        packages: function() {this._handlePage(this._packages, PackageAdminView)},
 
-        packages: function() {
-            if (!this._packages) {
-                this._packages = new PackageAdminView();
-                this._createdPages.push(this._packages);
-            }
-            this.activatePage(this._packages);
-        },
+        packageDetails: function() {this._handlePage(this._packageDetails, PackageDetailsAdminView)},
 
-        packageDetails: function(name) {
-            if (!this._packageDetails) {
-                this._packageDetails = new ResourceAdminView();
-                this._createdPages.push(this._packageDetails);
-            }
-            this.activatePage(this._packageDetails);
-        },
+        resources: function() {this._handlePage(this._resources, ResourceAdminView)},
 
-        resources: function() {
-            if (!this._resources) {
-                this._resources = new ResourceAdminView();
-                this._createdPages.push(this._resources);
-            }
-            this.activatePage(this._resources);
-        },
+        resourceDetails: function() {this._handlePage(this._resourceDetails, ResourcDetailseAdminView)},
 
-        resourceDetails: function(name) {
-            if (!this._resourceDetails) {
-                this._resourceDetails = new ResourceAdminView();
-                this._createdPages.push(this._resourceDetails);
-            }
-            this.activatePage(this._resourceDetails);
-        },
+        profile: function() {this._handlePage(this._profile, ProfileAdminView)},
 
-        profile: function() {
-            if (!this._profile) {
-                this._profile = new ProfileAdminView();
-                this._createdPages.push(this._profile);
-            }
-            this.activatePage(this._profile);
-        },
+        login: function() {this._handlePage(this._login, LoginAdminView)},
 
-        login: function() {
-            if (!this._login) {
-                this._login = new LoginAdminView();
-                this._createdPages.push(this._login);
-            }
-            this.activatePage(this._login);
-        },
-
-        logout: function() {
-            if (!this._login) {
-                this._login = new LoginAdminView();
-                this._createdPages.push(this._login);
-            }
-            this.activatePage(this._login);
-        },
+        logout: function() {this._handlePage(this._logout, ResourceAdminView)},
     });
 
     /*** Start ***/
