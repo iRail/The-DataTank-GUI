@@ -99,6 +99,49 @@ a.delete_input:hover {
     text-align: center;
 }
 
+/* Resource drag */
+.drag-backdrop {
+    position: fixed;
+    background-color: black;
+    filter: alpha(opacity=80);
+    -khtml-opacity: 0.8;
+    -moz-opacity: 0.8;
+    opacity: 0.8;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.drag-dragdrop .texttt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    margin: -300px 0 0 0;
+    z-index: 2000;
+    -khtml-opacity: 1;
+    -moz-opacity: 1;
+    opacity: 1;
+    border: green;
+}
+
+.drag-backdrop h1 {
+    position: absolute;
+    width: 300px;
+    margin: -150px 0 0 0;
+    color: white;
+    font-size: 72px;
+    top: 50%;
+    left: 50%;
+    z-index: 2000;
+    -khtml-opacity: 1;
+    -moz-opacity: 1;
+    opacity: 1;
+    text-shadow: black 20px 0px 2px;
+}
+
 /* table flot reset */
 #stats-placeholder table {
     width: 80px;

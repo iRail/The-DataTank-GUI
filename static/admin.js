@@ -384,7 +384,7 @@ window.App = (function ($, _, Backbone) {
     });
 
     window.LogoutAdminView = AdminView.extend({
-        el: "#admin-logout",
+        el: '#admin-logout',
 
         initialize: function() {
             // Super
@@ -492,6 +492,33 @@ window.App = (function ($, _, Backbone) {
         },
     });
 
+    /*** Drag & Drop ***/
+
+    window.DragAndDrop = jQueryView.extend({
+        el: 'body',
+        
+        initialize: function(args) {
+            // Super
+            AdminView.prototype.initialize.call(this);
+
+            this.workspace = args.workspace;
+        },
+
+        events: {
+            'dragenter': 'dragEnter',
+            'drop': 'drop',
+        },
+
+        dragEnter: function() {
+            $('#admin-resource-drag').removeClass('hidden');
+            console.log('drag enter');
+        },
+
+        drop: function() {
+            console.log('drop');
+        },
+    });
+
     /*** Start ***/
 
     var self = {};
@@ -501,6 +528,7 @@ window.App = (function ($, _, Backbone) {
             //pushState: true,
             root: '/~abe/The-DataTank-GUI/app.php/admin'
         });
+        var drag = new DragAndDrop({workspace: workspace});
     };
     return self;
 });
