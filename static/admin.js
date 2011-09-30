@@ -405,7 +405,7 @@ window.App = (function ($, _, Backbone) {
         _createdPages: [],
         _menu: null,
         _menuItems: {
-            'admin-admin': '#admin-menu-i   ndex',
+            'admin-admin': '#admin-menu-index',
             'admin-package': '#admin-menu-packages',
             'admin-resource': '#admin-menu-resources',
             'admin-profile': '#admin-menu-profile',
@@ -415,7 +415,7 @@ window.App = (function ($, _, Backbone) {
 
         initialize: function() {
             this._menu = $('#admin-menu li');
-            _.extend(this._menu, $('.secondary-nav li'));
+            //_.extend(this._menu, $('.secondary-nav li'));
         },
 
         activatePage: function(page) {
