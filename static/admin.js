@@ -111,8 +111,8 @@ window.App = (function ($, _, Backbone) {
         template: '#admin-package-template',
 
         initialize: function(model) {
-            // super
-            //this.model = model;
+            console.log('cr pam');
+            // Super
             jQueryView.prototype.initialize.call(this);
 
             //this.removeModalTemplate = $('#admin-package-remove-modal-template');
@@ -449,33 +449,47 @@ window.App = (function ($, _, Backbone) {
 
         // A generic page handler that returns a function that creates a page
         // handler for `page` and creates a coresponding view with `view`.
-        _handlePage: function(page, view) {
-            var self = this;
-            var func = function() {
-                if (!self.page) {
-                    page = new view();
-                    self._createdPages.push(page);
-                }
-                self.activatePage(page);
+        _handlePage: function(context, page, view) {
+            console.log('page: ' + page);
+            if (!context[page]) {
+                context[page] = new view();
+                this._createdPages.push(context[page]);
             }
-            return func();
+            console.log('page: ' + context[page]);
+            this.activatePage(context[page]);
         },
 
-        index: function() {this._handlePage(this._index, IndexAdminView)},
+        index: function() {
+            this._handlePage(this, '_index', IndexAdminView)
+        },
 
-        packages: function() {this._handlePage(this._packages, PackageAdminView)},
+        packages: function() {
+            this._handlePage(this, '_packages', PackageAdminView)
+        },
 
-        packageDetails: function() {this._handlePage(this._packageDetails, PackageDetailsAdminView)},
+        packageDetails: function() {
+            this._handlePage(this, '_packageDetails', PackageDetailsAdminView)
+        },
 
-        resources: function() {this._handlePage(this._resources, ResourceAdminView)},
+        resources: function() {
+            this._handlePage(this, '_resources', ResourceAdminView)
+        },
 
-        resourceDetails: function() {this._handlePage(this._resourceDetails, ResourcDetailseAdminView)},
+        resourceDetails: function() {
+            this._handlePage(this, '_resourceDetails', ResourcDetailseAdminView)
+        },
 
-        profile: function() {this._handlePage(this._profile, ProfileAdminView)},
+        profile: function() {
+            this._handlePage(this, '_profile', ProfileAdminView)
+        },
 
-        login: function() {this._handlePage(this._login, LoginAdminView)},
+        login: function() {
+            this._handlePage(this, '_login', LoginAdminView)
+        },
 
-        logout: function() {this._handlePage(this._logout, ResourceAdminView)},
+        logout: function() {
+            this._handlePage(this, '_logout', ResourceAdminView)
+        },
     });
 
     /*** Start ***/
