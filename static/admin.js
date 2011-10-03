@@ -505,13 +505,19 @@ window.App = (function ($, _, Backbone) {
         },
 
         events: {
-            'dragenter': 'dragEnter',
+            'drag': 'dragEnter',
+            'dragleave': 'dragLeave',
             'drop': 'drop',
         },
 
         dragEnter: function() {
             $('#admin-resource-drag').removeClass('hidden');
             console.log('drag enter');
+        },
+
+        dragLeave: function() {
+            $('#admin-resource-drag').addClass('hidden');
+            console.log('drag leave');
         },
 
         drop: function() {
