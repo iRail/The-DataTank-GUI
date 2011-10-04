@@ -163,17 +163,28 @@ a.delete_input:hover {
 
 /* File Input overlay hack */
 .file-input-hack {
+    width: 100px;
     display: inline;
-    width: 50px;
-    height: 20px;
     overflow: hidden;
 }
 
 .file-input-hack button {
     font-size: 16px;
+    /*left: -126px;*/
+    /*position: relative;*/
 }
 
-.fil-input-hack input {
-    font-size: 16px;
+.file-input-hack input[type="file"] {
+    left: -126px;
+    position: relative;
+    width: 92px;
+    opacity: 0;
+}
+
+.file-input-hack #admin-upload-link {
+    left: -126px;
+    position: relative;
+    width: 92px;
+    opacity: 1;
 }
 
