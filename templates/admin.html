@@ -202,8 +202,15 @@
                         <div id="admin-upload" class="clearfix">
                             <label>Your file</label>
                             <div class="input">
-                                <button class="btn large" id="admin-upload-computer"><img src="{{ static }}/computer16.png"/> Computer</button>
-                                <button class="btn large" id="admin-upload-link"><img src="{{ static }}/link16.png"/> Link</button>
+                                <span class="file-input-hack">
+                                    <button class="btn large" id="admin-upload-computer">
+                                        <img src="{{ static }}/computer16.png"/> Computer
+                                    </button>
+                                    <input type="file" class="btn" id="admin-upload-file">
+                                </span>
+                                <button class="btn large" id="admin-upload-link">
+                                    <img src="{{ static }}/link16.png"/> Link
+                                </button>
                                 <span class="help-block">
                                     <strong>Note:</strong> or drap and drop a file onto this page.
                                 </span>
@@ -212,7 +219,11 @@
                         <div id="admin-file" class="clearfix hidden">
                             <label>Your file</label>
                             <div class="input-prepend">
-                                <span class="add-on"><a id="admin-remove-upload" class="delete_input" href="#"><img src="{{ static }}/trash.gif"/></a></span>
+                                <span class="add-on">
+                                    <a id="admin-remove-upload" class="delete_input" href="#">
+                                        <img src="{{ static }}/trash.gif"/>
+                                    </a>
+                                </span>
                                 <input class="xlarge disabled" id="disabledInput" name="disabledInput" size="30" type="text" placeholder="Gentse Feesten Dag1.csv" disabled="">
                             </div>
                         </div>
@@ -222,7 +233,7 @@
                                 <input id="admin-resource-columns" type="text" class="xlarge"></input>
                             </div>
                             <span class="help-block">
-                                <strong>Note:</strong> use ; to seperate the columns.</span>
+                                <strong>Note:</strong> use ';' to seperate the columns.</span>
                         </div>
                         <div class="clearfix">
                             <label>Primary Key</label>
@@ -361,7 +372,7 @@
         </div>
     </div>
 
-    <div id="admin-package-linkl" class="modal hidden">
+    <div id="admin-package-link" class="modal hidden">
         <div class="modal-header">
             <a href="#" class="close">&times;</a>
             <h3>Link</h3>
@@ -370,8 +381,8 @@
             <input id="admin-resource-name" type="text" class="xlarge" placeholder="http://">
         </div>
         <div class="modal-footer">
-            <a href="" id="admin-package-remove-remove" class="btn primary">Add</a>
-            <a href="" id="admin-package-remove-cancel" class="btn secondary">Cancel</a>
+            <a href="" id="admin-package-link-add" class="btn primary">Add</a>
+            <a href="" id="admin-package-link-cancel" class="btn secondary">Cancel</a>
         </div>
     </div>
 

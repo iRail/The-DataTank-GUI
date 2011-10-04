@@ -25,10 +25,6 @@ window.App = (function ($, _, Backbone) {
         },
     });
 
-    window.ModalBox = Backbone.View.extend({
-        el: '#admin-package-remove-modal',
-    });
-
     /*** Index ***/
 
     window.IndexAdminView = AdminView.extend({
@@ -70,15 +66,15 @@ window.App = (function ($, _, Backbone) {
         initialize: function(params) {
             // Super
             jQueryView.prototype.initialize.call(this);
-            var that = this;
+            var self = this;
             //this.package = params.package;
             this.resources = Resources.filter(function(resource) {
-                return resource.get('package') === that.model.get('name');
+                return resource.get('package') === self.model.get('name');
             });
             this.el.find('.modal-header h3').html('Removing "' + this.model.get('name') + '"');
             this.el.find('.modal-body').html('Are you shure you want to remove this packages with all of its resources?<ul>');
             // TODO add list of all resources of package.
-            //$.tmpl('#admin-package-remove-resources-modal', this.resources).appendTo(
+             //$.tmpl('#admin-package-remove-resources-modal', this.resources).appendTo(
                 //this.el.find('.modal-body')
             //);
 
@@ -261,6 +257,36 @@ window.App = (function ($, _, Backbone) {
         },
     });
 
+    window.ResourceAddLinkModal = jQueryView.extend({
+        el: '#admin-package-link',
+
+        initialize: function(params) {
+            // Super
+            jQueryView.prototype.initialize.call(this);
+
+            // Show modal box
+            this.el.modal({
+                backdrop: true,
+                keyboard: true,
+            });
+        },
+
+        events: {
+            'click #admin-package-link-add': 'add',
+            'click #admin-package-link-cancel': 'cancel',
+        },
+
+        add: function() {
+            console.log('Add link');
+            this.el.modal('toggle');
+        },
+
+        cancel: function() {
+            console.log('Cancel remove');
+            this.el.modal('toggle');
+        },
+    });
+
     window.ResourceAdminView = AdminView.extend({
         el: '#admin-resource',
 
@@ -278,6 +304,9 @@ window.App = (function ($, _, Backbone) {
             this.primaryKey = $('#admin-resource-pk');
             this.pkg = $('#admin-resource-pkg');
             this.doc = $('#admin-resource-doc');
+            this.computer = $('#admin-upload-computer');
+            this.link = $('#admin-upload-link');
+            this.file = $('#admin-upload-file');
             
             // Fill Resources
             Resources.fetch({
@@ -300,6 +329,8 @@ window.App = (function ($, _, Backbone) {
 
         events: {
             'click #admin-resource-save': 'createResource',
+            'click #admin-upload-computer': 'selectUploadFile',
+            'click #admin-upload-link': 'showUploadModal',
         },
 
         validate: function(attr) {
@@ -349,6 +380,14 @@ window.App = (function ($, _, Backbone) {
                     console.log('FAIL');
                 }
             });
+        },
+
+        selectUploadFile: function() {
+            this.file.select();  
+        },
+
+        showUploadModal: function() {
+            var modal = new ResourceAddLinkModal();
         },
 
         addOne: function(resource) {
@@ -502,6 +541,7 @@ window.App = (function ($, _, Backbone) {
             AdminView.prototype.initialize.call(this);
 
             this.workspace = args.workspace;
+            
         },
 
         events: {
