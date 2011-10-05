@@ -258,7 +258,7 @@ window.App = (function ($, _, Backbone) {
     });
 
     window.ResourceAddLinkModal = jQueryView.extend({
-        el: '#admin-package-link',
+        el: '#admin-resource-link',
 
         initialize: function(params) {
             // Super
@@ -272,18 +272,22 @@ window.App = (function ($, _, Backbone) {
         },
 
         events: {
-            'click #admin-package-link-add': 'add',
-            'click #admin-package-link-cancel': 'cancel',
+            'click #admin-resource-link-add': 'add',
+            'click #admin-resource-link-cancel': 'cancel',
         },
 
         add: function() {
-            console.log('Add link');
-            this.el.modal('toggle');
+            var url = $('#admin-resource-url').attr('value');
+            console.log('Add link ', url);
+            $('#admin-upload').addClass('hidden');
+            $('#admin-resource-file').attr('placeholder', url);
+            $('#admin-file').removeClass('hidden');
+            this.el.modal('hide');
         },
 
         cancel: function() {
             console.log('Cancel remove');
-            this.el.modal('toggle');
+            this.el.modal('hide');
         },
     });
 
@@ -307,6 +311,7 @@ window.App = (function ($, _, Backbone) {
             this.computer = $('#admin-upload-computer');
             this.link = $('#admin-upload-link');
             this.file = $('#admin-upload-file');
+            this.selectedFile = $('#admin-file');
             
             // Fill Resources
             Resources.fetch({
@@ -331,6 +336,7 @@ window.App = (function ($, _, Backbone) {
             'click #admin-resource-save': 'createResource',
             'click #admin-upload-computer': 'selectUploadFile',
             'click #admin-upload-link': 'showUploadModal',
+            'click #admin-remove-upload': 'removeUpload',
         },
 
         validate: function(attr) {
@@ -388,6 +394,13 @@ window.App = (function ($, _, Backbone) {
 
         showUploadModal: function() {
             var modal = new ResourceAddLinkModal();
+        },
+
+        removeUpload: function() {
+            $('#admin-file').addClass('hidden');
+            $('#admin-resource-file').attr('placeholder', '');
+            // TODO clear value of admin-upload-file.
+            $('#admin-upload').removeClass('hidden');
         },
 
         addOne: function(resource) {

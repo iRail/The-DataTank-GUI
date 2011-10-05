@@ -220,11 +220,11 @@
                             <label>Your file</label>
                             <div class="input-prepend">
                                 <span class="add-on">
-                                    <a id="admin-remove-upload" class="delete_input" href="#">
+                                    <a id="admin-remove-upload" class="delete_input">
                                         <img src="{{ static }}/trash.gif"/>
                                     </a>
                                 </span>
-                                <input class="xlarge disabled" id="disabledInput" name="disabledInput" size="30" type="text" placeholder="Gentse Feesten Dag1.csv" disabled="">
+                                <input class="xlarge disabled" id="admin-resource-file" name="disabledInput" size="30" type="text" placeholder="" disabled="">
                             </div>
                         </div>
                         <div class="clearfix">
@@ -372,17 +372,17 @@
         </div>
     </div>
 
-    <div id="admin-package-link" class="modal hidden">
+    <div id="admin-resource-link" class="modal hidden">
         <div class="modal-header">
             <a href="#" class="close">&times;</a>
             <h3>Link</h3>
         </div>
         <div class="modal-body">
-            <input id="admin-resource-name" type="text" class="xlarge" placeholder="http://">
+            <input id="admin-resource-url" type="text" class="xlarge" placeholder="http://">
         </div>
         <div class="modal-footer">
-            <a href="" id="admin-package-link-add" class="btn primary">Add</a>
-            <a href="" id="admin-package-link-cancel" class="btn secondary">Cancel</a>
+            <button id="admin-resource-link-add" class="btn primary">Add</button>
+            <button id="admin-resource-link-cancel" class="btn secondary">Cancel</button>
         </div>
     </div>
 
